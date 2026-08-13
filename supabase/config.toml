@@ -1,0 +1,10 @@
+project_id = "imob_flow"
+
+[functions.api]
+# O `Authorization` desta função carrega o token do ImobFlow, validado
+# contra `api_tokens` — não um JWT do Supabase Auth. Com `verify_jwt`
+# ligado, o gateway rejeitaria toda requisição antes de o nosso código
+# rodar. Desligar não abre a porta: a tranca passa a ser `autenticar()`,
+# a primeira coisa que roda em toda requisição.
+verify_jwt = false
+entrypoint = "./functions/api/index.ts"

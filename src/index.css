@@ -1,0 +1,353 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* =====================================================================
+   ImobFlow — Sistema de design
+   ---------------------------------------------------------------------
+   Este arquivo é o ÚNICO lugar onde cor, tipografia e raio de canto são
+   definidos. Nenhum componente deve escrever cor ou tamanho solto.
+   Ver NICHO.md, seção "Identidade visual".
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. COR DE DESTAQUE — ponto único de troca por imobiliária
+   ---------------------------------------------------------------------
+   Trocar --cor-destaque muda botões, links, item ativo da sidebar,
+   foco de campo, coluna visual do login e destaques do site público
+   de uma vez só. As outras três derivam dela e devem ser ajustadas
+   junto, mantendo a mesma matiz (o terceiro número do oklch).
+
+   Padrão do ImobFlow: verde sóbrio e natural — solidez, não pressa.
+   --------------------------------------------------------------------- */
+:root {
+  --cor-destaque: oklch(0.505 0.078 158);
+  --cor-destaque-hover: oklch(0.445 0.078 158);
+  --cor-destaque-contraste: oklch(0.99 0.005 158);
+  --cor-destaque-suave: oklch(0.955 0.021 158);
+}
+
+/* ---------------------------------------------------------------------
+   1b. BARRA LATERAL DO PAINEL — verde profundo
+   ---------------------------------------------------------------------
+   A sidebar era branca sobre um conteúdo cinza quase branco: 2,8 pontos
+   de luminosidade de diferença, e uma borda de 1px fazendo todo o
+   trabalho de separar as duas regiões. Escurecida, ela passa a se ler
+   como um lugar próprio, e o conteúdo ganha o contraste que faltava.
+
+   TODOS os valores derivam de --cor-destaque, e isso é o ponto: a barra
+   é a maior área de cor do painel, e escrita como um verde absoluto ela
+   ficaria para trás na primeira imobiliária de marca vermelha. Trocando
+   as quatro linhas do bloco acima, a barra acompanha sozinha.
+
+   As transparências (hover, item ativo, bordas) são brancas de
+   propósito: funcionam sobre qualquer matiz que --cor-destaque venha a
+   ter, sem precisar de um valor calculado por cor.
+   --------------------------------------------------------------------- */
+:root {
+  /* O verde da marca levado ao escuro: mesma matiz, ~40% da luminosidade */
+  --sidebar: color-mix(in oklab, var(--cor-destaque) 60%, black);
+
+  /* Item em repouso e item em foco. O forte é usado no hover, no item
+     ativo e no nome da imobiliária. */
+  --sidebar-texto: color-mix(in oklab, var(--cor-destaque-contraste) 80%, var(--sidebar));
+  --sidebar-texto-forte: var(--cor-destaque-contraste);
+  /* Rótulo de grupo: presente o bastante para orientar, apagado o
+     bastante para não competir com os itens que ele encima. */
+  --sidebar-rotulo: color-mix(in oklab, var(--cor-destaque-contraste) 55%, var(--sidebar));
+
+  --sidebar-hover: oklch(1 0 0 / 0.07);
+  --sidebar-ativo: oklch(1 0 0 / 0.13);
+  --sidebar-borda: oklch(1 0 0 / 0.1);
+
+  /* Marcador vertical do item ativo. Sobre fundo escuro, quem distingue
+     o item selecionado é a luminosidade, não a matiz. */
+  --sidebar-marcador: color-mix(in oklab, var(--cor-destaque) 42%, white);
+}
+
+/* ---------------------------------------------------------------------
+   2. NEUTROS — cinzas QUENTES (matiz 75), nunca azulados
+   --------------------------------------------------------------------- */
+:root {
+  /* Fundo da área de conteúdo do painel: cinza claro quente */
+  --fundo: oklch(0.972 0.0025 75);
+  /* Cartões e superfícies elevadas: branco */
+  --superficie: oklch(1 0 0);
+  --superficie-alternativa: oklch(0.985 0.002 75);
+
+  /* Texto: cinza bem escuro, próximo do preto — nunca preto puro */
+  --texto: oklch(0.235 0.006 75);
+  --texto-suave: oklch(0.545 0.009 75);
+  --texto-tenue: oklch(0.665 0.008 75);
+
+  /* Bordas e divisores discretos */
+  --borda: oklch(0.917 0.0035 75);
+  --borda-forte: oklch(0.868 0.004 75);
+
+  /* Semânticas */
+  --destrutivo: oklch(0.548 0.196 27);
+  --destrutivo-contraste: oklch(0.99 0.005 27);
+  --sucesso: oklch(0.55 0.11 155);
+  --alerta: oklch(0.68 0.14 75);
+
+  /* Formas: cantos generosos */
+  --raio: 0.75rem;
+}
+
+/* ---------------------------------------------------------------------
+   2b. CORES DO FUNIL — uma por etapa do lead
+   ---------------------------------------------------------------------
+   Sete cores, na ordem das colunas do Kanban. Não são decorativas: são o
+   que permite reconhecer a etapa de relance, no badge da tabela de Leads
+   e no topo de cada coluna do Funil.
+
+   As matizes foram escolhidas para se separarem duas a duas nas
+   vizinhanças que importam. `follow_up_1` e `follow_up_2` são da mesma
+   família de propósito e por isso da mesma matiz, distinguidas pela
+   luminosidade — não pela cor, que aqui só diria "são parecidos".
+
+   Ao adaptar o sistema para outro nicho, os status mudam e estas cores
+   mudam junto. Ver REPLICACAO.md, seção "Os sete status são do funil de
+   imobiliária".
+   --------------------------------------------------------------------- */
+:root {
+  --status-novo: oklch(0.585 0.015 75);
+  --status-conversando: oklch(0.565 0.115 245);
+  --status-agendou: oklch(0.545 0.135 295);
+  --status-visitou: oklch(0.545 0.115 155);
+  --status-cancelou: oklch(0.575 0.165 27);
+  --status-follow-up-1: oklch(0.675 0.125 70);
+  --status-follow-up-2: oklch(0.5 0.085 60);
+}
+
+/* ---------------------------------------------------------------------
+   3. Ponte para o Tailwind
+   Gera as utilidades bg-fundo, text-texto-suave, border-borda, etc.
+   --------------------------------------------------------------------- */
+@theme inline {
+  --color-fundo: var(--fundo);
+  --color-superficie: var(--superficie);
+  --color-superficie-alternativa: var(--superficie-alternativa);
+
+  --color-texto: var(--texto);
+  --color-texto-suave: var(--texto-suave);
+  --color-texto-tenue: var(--texto-tenue);
+
+  --color-borda: var(--borda);
+  --color-borda-forte: var(--borda-forte);
+
+  --color-destaque: var(--cor-destaque);
+  --color-destaque-hover: var(--cor-destaque-hover);
+  --color-destaque-contraste: var(--cor-destaque-contraste);
+  --color-destaque-suave: var(--cor-destaque-suave);
+
+  /* Barra lateral do painel — gera bg-sidebar, text-sidebar-texto, etc. */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-texto: var(--sidebar-texto);
+  --color-sidebar-texto-forte: var(--sidebar-texto-forte);
+  --color-sidebar-rotulo: var(--sidebar-rotulo);
+  --color-sidebar-hover: var(--sidebar-hover);
+  --color-sidebar-ativo: var(--sidebar-ativo);
+  --color-sidebar-borda: var(--sidebar-borda);
+  --color-sidebar-marcador: var(--sidebar-marcador);
+
+  --color-destrutivo: var(--destrutivo);
+  --color-destrutivo-contraste: var(--destrutivo-contraste);
+  --color-sucesso: var(--sucesso);
+  --color-alerta: var(--alerta);
+
+  /* Funil de leads — gera bg-status-novo, text-status-agendou, etc. */
+  --color-status-novo: var(--status-novo);
+  --color-status-conversando: var(--status-conversando);
+  --color-status-agendou: var(--status-agendou);
+  --color-status-visitou: var(--status-visitou);
+  --color-status-cancelou: var(--status-cancelou);
+  --color-status-follow-up-1: var(--status-follow-up-1);
+  --color-status-follow-up-2: var(--status-follow-up-2);
+
+  --radius-base: var(--raio);
+  --radius-sm: calc(var(--raio) - 4px);
+  --radius-md: calc(var(--raio) - 2px);
+  --radius-lg: var(--raio);
+  --radius-xl: calc(var(--raio) + 4px);
+
+  /* ------------------------------------------------------------------
+     TIPOGRAFIA — família única, sem serifa, com boa variação de peso.
+     Trocar a fonte é trocar esta linha e o <link> do index.html.
+     ------------------------------------------------------------------ */
+  --font-sans:
+    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
+  /* Sombras suaves e discretas, nunca pesadas */
+  --shadow-cartao: 0 1px 2px oklch(0.235 0.006 75 / 0.04), 0 1px 3px oklch(0.235 0.006 75 / 0.05);
+  --shadow-elevado: 0 4px 12px oklch(0.235 0.006 75 / 0.07), 0 2px 4px oklch(0.235 0.006 75 / 0.04);
+  --shadow-sobreposto: 0 12px 32px oklch(0.235 0.006 75 / 0.13);
+}
+
+/* ---------------------------------------------------------------------
+   4. Base
+   --------------------------------------------------------------------- */
+@layer base {
+  * {
+    border-color: var(--borda);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--fundo);
+    color: var(--texto);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Foco visível e consistente em todo o sistema */
+  :focus-visible {
+    outline: 2px solid var(--cor-destaque);
+    outline-offset: 2px;
+  }
+
+  /* Dentro da barra lateral o anel verde cairia sobre o próprio verde e
+     sumiria — justamente para quem navega por teclado, que é quem mais
+     depende dele. Ali o foco é claro. */
+  [data-sidebar] :focus-visible {
+    outline-color: var(--sidebar-texto-forte);
+  }
+
+  ::selection {
+    background-color: var(--cor-destaque-suave);
+    color: var(--texto);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   5. Escalas tipográficas das duas áreas
+   ---------------------------------------------------------------------
+   PAINEL — ferramenta de trabalho. Densidade de informação, títulos
+   contidos, hierarquia por peso mais do que por tamanho.
+
+   SITE PÚBLICO — vitrine. Escala maior e mais contraste entre título e
+   corpo, mesma família e mesma cor de destaque para manter coerência.
+   A construção visual do site acontece na Etapa 6; aqui ficam apenas
+   as classes que definem a direção.
+   --------------------------------------------------------------------- */
+@layer components {
+  /* --- Painel --- */
+  .titulo-pagina {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--texto);
+  }
+
+  .titulo-secao {
+    font-size: 1.0625rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--texto);
+  }
+
+  .rotulo-grupo {
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--texto-tenue);
+  }
+
+  .texto-apoio {
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+    color: var(--texto-suave);
+  }
+
+  /* --- Site público --- */
+  .titulo-vitrine {
+    font-size: clamp(2rem, 1.35rem + 2.6vw, 3.25rem);
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--texto);
+  }
+
+  .subtitulo-vitrine {
+    font-size: clamp(1rem, 0.93rem + 0.32vw, 1.1875rem);
+    line-height: 1.6;
+    color: var(--texto-suave);
+  }
+
+  /* Título de seção da vitrine: grande e respirado, com o parágrafo de
+     apoio ao lado. Bem maior que o `.titulo-secao` do painel — lá a
+     hierarquia é por peso, porque densidade importa; aqui é por
+     tamanho, porque o que importa é a foto respirar em volta. */
+  .titulo-secao-vitrine {
+    font-size: clamp(1.625rem, 1.35rem + 1.1vw, 2.25rem);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--texto);
+  }
+
+  /* Largura e respiro únicos de toda a vitrine. Um só lugar para mudar,
+     e nenhuma seção com margem "quase igual" à da seção de cima. */
+  .container-vitrine {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-vitrine {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Espaçamento vertical entre seções da vitrine. Generoso por decisão
+     de direção visual — ver CLAUDE.md, "Direção visual das duas áreas". */
+  .secao-vitrine {
+    padding-block: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  }
+
+  /* Cartão padrão do painel: branco sobre o fundo cinza claro */
+  .cartao {
+    background-color: var(--superficie);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    box-shadow: var(--shadow-cartao);
+  }
+
+  /* ------------------------------------------------------------------
+     Card do Funil que se moveu sozinho, por Realtime.
+
+     Um card que troca de coluna sem ninguém tocar nele é lido como bug.
+     O pulso de destaque diz "isto acabou de mudar" no momento em que
+     muda, e some sozinho — não vira mais um estado para o usuário
+     administrar.
+     ------------------------------------------------------------------ */
+  .lead-recem-movido {
+    animation: lead-pulso 2.4s ease-out;
+  }
+}
+
+@keyframes lead-pulso {
+  0% {
+    box-shadow: 0 0 0 0 var(--cor-destaque);
+    transform: scale(1.015);
+  }
+  35% {
+    box-shadow: 0 0 0 3px var(--cor-destaque-suave);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: var(--shadow-cartao);
+    transform: scale(1);
+  }
+}

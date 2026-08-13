@@ -1,0 +1,44 @@
+# Dependências
+node_modules
+.pnp
+.pnp.js
+
+# Build
+dist
+dist-ssr
+build
+*.local
+
+# Variáveis de ambiente — NUNCA versionar.
+# O .env contém a URL e a chave do Supabase; o .env.example é o modelo.
+.env
+.env.*
+!.env.example
+
+# Supabase CLI
+.supabase
+supabase/.temp
+supabase/.branches
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editores
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Cache de build
+.vite
+*.tsbuildinfo
