@@ -236,6 +236,7 @@ A revogação vale na chamada seguinte, sem período de tolerância.
 | `POST` | `/agenda/reagendar` | Move a visita, por id |
 | `POST` | `/agenda/cancelar` | Cancela, por id |
 | `GET` | `/agenda/visitas` | Lista com o id de cada visita |
+| `GET` | `/corretores` | Equipe ativa, com o id do corretor e o da agenda dele |
 | `GET` | `/leads/:whatsapp` | Lead e histórico. Somente leitura |
 
 Os **dados da imobiliária** (endereço, contatos, redes e horário de atendimento) não estão na API: o agente lê a view `info_imob_agente` direto no Supabase, com `select informacoes from info_imob_agente`, e recebe tudo em uma frase pronta. Ver BANCO.md, seção 2.14.

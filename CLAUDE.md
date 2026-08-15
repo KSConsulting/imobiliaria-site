@@ -584,11 +584,26 @@ Todo endpoint exige `Authorization: Bearer <token>`. A validação é de `fn_api
 | POST | `/agenda/reagendar` | Move a visita, sempre por id |
 | POST | `/agenda/cancelar` | Cancela, sempre por id |
 | GET | `/agenda/visitas` | Lista com o **id** — é como o agente descobre qual visita cancelar |
+| GET | `/corretores` | Equipe ativa, com `id_corretor` e `id_agenda`. Para o fluxo, não para a conversa |
 | GET | `/leads/:whatsapp` | Lead e histórico de visitas. Somente leitura |
 
 **Não existe endpoint de imóveis excluídos, e não deve existir.** A exclusão é definitiva: o registro saiu do banco e não há de onde lê-lo.
 
 **Não existe mais endpoint de dados da imobiliária.** O `GET /imobiliaria` foi removido: o agente lê a view `info_imob_agente` direto pelo N8N, que é uma consulta em vez de uma requisição autenticada com limite por minuto. Mantê-lo significaria a mesma frase montada em dois lugares, e a primeira divergência apareceu no dia em que a view nasceu. **Não recrie esse endpoint** sem antes decidir qual dos dois é a fonte.
+
+### A lista de corretores é para o fluxo, não para a conversa
+
+`GET /corretores` devolve a equipe ativa com `id_corretor`, `id_agenda` e a janela de atendimento de cada um. Código em `supabase/functions/api/corretores.ts`.
+
+**Ele não muda quem conduz a visita.** Corretor é livre, e quem escolhe continua sendo `/agenda/agendar`, que pega o livre menos carregado. Passar a lista ao cliente transformaria uma escolha do sistema numa pergunta que ele não tem como responder, e é por isso que `/agenda/disponibilidade` nunca recebeu nem devolveu corretor. O que o endpoint resolve são os dois identificadores que o N8N precisa ter antes de existir conversa: o **`id_corretor`**, que é o filtro de `GET /agenda/visitas` e o campo opcional de `agendar` e `reagendar`, e o **`id_agenda`**, que não é usado por endpoint nenhum da API e existe para o fluxo que lê ou escreve `agendas_horarios` direto na tabela.
+
+Três decisões dentro dele:
+
+- **WhatsApp, e-mail e CRECI ficam fora da seleção.** É dado pessoal de funcionário, e o destino da resposta é a conversa de um agente com um cliente. Vale a mesma regra de `CAMPOS_COMPLETO`: a Edge Function roda com service role, o RLS não limita coluna, e a lista de colunas é a única proteção que sobra
+- **`agendas.duracao_slot` também fica fora**, por outro motivo: quem gera os blocos é `DURACAO_VISITA`, do ambiente. Devolver a coluna prometeria um número que o cálculo não consulta, e a divergência só apareceria quando alguém a editasse esperando que a agenda mudasse
+- **Inativo só sai com `?incluir_inativos=true`.** Ele não recebe visita, e oferecê-lo ao agente faria o agendamento ser recusado pelo banco sem que a conversa entendesse por quê
+
+A frase de `atende` é montada em dois lugares — `resumirJanela` aqui e a de mesmo nome em `src/lib/corretores.ts`, que alimenta o cartão do painel. Duplicação consciente, pela mesma razão do horário de funcionamento: **mexeu numa, confira a outra**, porque duas frases diferentes para a mesma janela fazem quem confere o painel duvidar do que o agente respondeu.
 
 ### Toda ficha de imóvel sai com o código e com o link da página
 

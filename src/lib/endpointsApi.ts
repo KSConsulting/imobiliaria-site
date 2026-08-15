@@ -9,7 +9,7 @@
  * ninguém desconfia dela.
  */
 
-export type GrupoEndpoint = 'imoveis' | 'agenda' | 'leads'
+export type GrupoEndpoint = 'imoveis' | 'agenda' | 'corretores' | 'leads'
 
 export interface ParametroEndpoint {
   nome: string
@@ -61,6 +61,11 @@ export const GRUPOS: { chave: GrupoEndpoint; rotulo: string; resumo: string }[] 
     chave: 'agenda',
     rotulo: 'Agenda',
     resumo: 'Consultar horários e operar visitas. Payload mínimo em todos.',
+  },
+  {
+    chave: 'corretores',
+    rotulo: 'Corretores',
+    resumo: 'Os identificadores da equipe, para o fluxo. Não é endpoint de atendimento.',
   },
   { chave: 'leads', rotulo: 'Leads', resumo: 'Somente leitura. A escrita é direta na tabela.' },
 ]
@@ -351,6 +356,60 @@ IMV-0002: …"
   ],
   "mensagem": "Há uma visita marcada: segunda-feira, 24/08, às 15h."
 }`,
+  },
+
+  /* --------------------------------------------------- corretores --- */
+  {
+    grupo: 'corretores',
+    metodo: 'GET',
+    caminho: '/corretores',
+    caminhoExemplo: '/corretores',
+    titulo: 'Listar corretores',
+    proposito:
+      'Devolve quem atende, o id de cada corretor e o id da agenda dele. Serve ao fluxo, não à conversa: corretor é livre no ImobFlow, e quem escolhe quem conduz a visita é o próprio "agendar", que pega o livre menos carregado. Oferecer a lista ao cliente transforma uma escolha do sistema numa pergunta que ele não tem como responder.',
+    parametros: [
+      {
+        nome: 'incluir_inativos',
+        tipo: 'true ou false',
+        obrigatorio: false,
+        descricao:
+          'Padrão false. Corretor inativo saiu da equipe ou está afastado e não recebe visita: só inclua para sincronizar com sistema externo, nunca no atendimento.',
+      },
+    ],
+    resposta: `{
+  "sucesso": true,
+  "dados": [
+    { "id_corretor": "uuid", "id_agenda": "uuid",
+      "nome": "Rafael", "sobrenome": "Souza", "nome_completo": "Rafael Souza",
+      "ativo": true,
+      "atende": "segunda a sexta, das 9h às 18h; sábado, das 9h às 13h",
+      "atendimento": [
+        { "dia_semana": 1, "dia": "segunda-feira", "inicio": "09:00", "fim": "18:00" }
+      ] }
+  ],
+  "total": 3,
+  "mensagem": "A equipe tem 3 corretores: Rafael, Marina e Paulo."
+}
+
+// "id_corretor" é o que vai em POST /agenda/agendar, /agenda/reagendar e
+// no filtro de GET /agenda/visitas.
+
+// "id_agenda" não é usado por endpoint nenhum daqui: ele é a chave de
+// "agendas_horarios", para o fluxo que lê ou escreve a janela de
+// atendimento direto na tabela.
+
+// "dia_semana" vai de 0 (domingo) a 6 (sábado), e só os dias ativos
+// aparecem. Sem nenhum, "atende" diz "Sem horário de atendimento
+// definido": o corretor existe e não tem janela, e o banco recusa
+// qualquer visita com ele.
+
+// WhatsApp, e-mail e CRECI do corretor NÃO saem por aqui, de propósito:
+// é dado pessoal de funcionário, e o destino desta resposta é a conversa
+// de um agente com um cliente.
+
+// A janela é declarada por corretor e é o que os triggers validam. Para
+// saber se um horário específico cabe, use POST /agenda/disponibilidade,
+// que já consolida a equipe inteira.`,
   },
 
   /* -------------------------------------------------------- leads --- */

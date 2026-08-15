@@ -273,6 +273,7 @@ A **estrutura dos endpoints não muda**, porque o que o agente de IA faz é o me
 | `POST /agenda/agendar` | Cria o agendamento | Nada, além do campo de código do item |
 | `POST /agenda/reagendar` · `/cancelar` | Move e cancela, por id | **Nada** |
 | `GET /agenda/visitas` | Lista com o id de cada compromisso | Só o rótulo em `mensagem` |
+| `GET /corretores` | Quem atende, com o id de cada um e o da agenda dele | **O nome do papel.** Vira `/consultores`, `/mecanicos`, `/professores` |
 | `GET /leads/:whatsapp` | Lead e histórico. Somente leitura | Só os campos de interesse do nicho |
 | `GET /[negocio]` | Dados do negócio, em frase montada | Nada |
 

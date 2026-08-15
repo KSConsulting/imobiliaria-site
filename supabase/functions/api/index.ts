@@ -8,6 +8,7 @@ import {
   listarPorStatus,
 } from './imoveis.ts'
 import { agendar, cancelar, disponibilidade, listarVisitas, reagendar } from './agenda.ts'
+import { listarCorretores } from './corretores.ts'
 import { leadPorWhatsapp } from './contexto.ts'
 
 /**
@@ -110,6 +111,11 @@ Deno.serve(async (requisicao: Request): Promise<Response> => {
       }
     }
 
+    /* ---------------------------------------------- corretores ----- */
+    if (metodo === 'GET' && partes[0] === 'corretores' && !partes[1]) {
+      return await listarCorretores(supabase, consumidor, url)
+    }
+
     /* -------------------------------------------------- leads ----- */
     if (metodo === 'GET' && partes[0] === 'leads' && partes[1]) {
       return await leadPorWhatsapp(supabase, consumidor, decodeURIComponent(partes[1]))
@@ -163,5 +169,6 @@ const ENDPOINTS = [
   'POST /agenda/reagendar',
   'POST /agenda/cancelar',
   'GET  /agenda/visitas',
+  'GET  /corretores',
   'GET  /leads/:whatsapp',
 ]

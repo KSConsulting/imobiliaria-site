@@ -247,6 +247,7 @@ const DESCRITORES: Record<string, Descritor> = {
     sem: 'Consultou horários disponíveis',
   },
   api_visitas_consultadas: { com: 'Consultou as visitas', sem: 'Consultou as visitas' },
+  api_corretores_consultados: { com: 'Consultou os corretores', sem: 'Consultou os corretores' },
   api_lead_consultado: { com: 'Consultou o contato %s', sem: 'Consultou um contato' },
   // O endpoint GET /imobiliaria foi removido, mas o rótulo fica. Toda
   // chamada que ele recebeu enquanto existiu está gravada em

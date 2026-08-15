@@ -26,6 +26,7 @@ export const AcoesApi = {
   imoveisListados: 'api_imoveis_listados',
   disponibilidadeConsultada: 'api_disponibilidade_consultada',
   visitasConsultadas: 'api_visitas_consultadas',
+  corretoresConsultados: 'api_corretores_consultados',
   leadConsultado: 'api_lead_consultado',
 } as const
 
