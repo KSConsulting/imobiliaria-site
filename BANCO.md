@@ -925,15 +925,14 @@ Aplicar **em ordem numérica**. Estão em [supabase/migrations/](supabase/migrat
 | `…015_dashboard_agregacoes.sql` | Etapa 7 — as oito funções de agregação do Dashboard |
 | `…016_logs_consulta.sql` | Etapa 8 — leitura da trilha de auditoria: categoria, listagem paginada e opções de filtro |
 | `…017_api_publica.sql` | Etapa 9 — `api_uso`, `fn_api_autenticar` e a categoria `api` em `fn_log_categoria` |
-| `…018_seed_imoveis_demonstracao.sql` | **Opcional.** 20 apartamentos fictícios para demonstração |
-| `…019_seed_rurais_demonstracao.sql` | **Opcional.** 10 chácaras e sítios fictícios para demonstração |
 | `…020_whatsapp_com_codigo_pais.sql` | Normalização de `crm_imobiliaria.whatsapp` para E.164 sem o mais |
 | `…021_configuracoes_url_site.sql` | Etapa 9 — `configuracoes.url_site`, base do link que o agente manda |
 | `…022_info_imob_agente.sql` | View `info_imob_agente` e `fn_telefone_legivel` (seção 2.14) |
 | `…023_horario_funcionamento.sql` | Etapa 8 — `configuracoes.horario_funcionamento` e a frase legível na view (seção 2.3) |
 | `…024_minutos_ultima_mensagem_cron.sql` | `pg_cron` e o job que envelhece `minutos_ultima_mensagem` (seção 4.1) |
+| `…025_seed_imoveis_sp_zona_sul_oeste.sql` | **Demonstração.** 30 imóveis fictícios: 15 apartamentos para locação, 10 para venda e 5 casas no interior |
 
-As migrations `…018` e `…019` são de demonstração e **saem antes de divulgar o site**. O comando está no README.
+A migration `…025` é de demonstração e **sai antes de divulgar o site**. O comando está no README. Ela é a única de conteúdo: todas as outras são estrutura.
 
 ### Verificação da Etapa 1
 

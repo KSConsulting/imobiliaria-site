@@ -557,10 +557,10 @@ Criados na Etapa 2, para uso em todas as seguintes:
 ## Próximos passos
 
 - Etapa 10 — Auditoria de segurança
-- Etapa 11 — Deploy seguro para o GitHub
+- **Etapa 11 — Deploy.** Deixou de ser pendência de construção e virou o **próximo passo de quem instala o sistema**: o roteiro está no README, seção 6, "Colocando no ar", e cobre o Supabase conduzido pela IA (criar projeto, migrations, Edge Function) e o frontend na Vercel. A peça que falha em silêncio ali é a Edge Function: sem ela o painel abre, a vitrine publica e só o agente de IA para de funcionar, com o erro aparecendo dentro do N8N, onde a suspeita recai sobre o fluxo. O que continua em aberto de verdade é a prévia do link no WhatsApp, que é limitação de SPA e não de configuração
 - **Depois de apontar o N8N para `/imoveis/buscar`, apagar as duas rotas herdadas** (`GET /imoveis/codigo/:codigo` e `POST /imoveis/codigos`) do roteador e os dois handlers de `api/imoveis.ts`. Elas já saíram do catálogo e continuam respondendo só para o fluxo em produção não quebrar no deploy da fusão
 - **No dia do deploy, preencher o endereço do site em Configurações → Dados.** Enquanto `configuracoes.url_site` estiver vazia, a API devolve `url` nula em toda ficha de imóvel e o agente atende sem nunca mandar o link das fotos. Não dá erro em lugar nenhum, que é o que torna fácil esquecer
-- **Antes de divulgar o site, limpar o seed de demonstração.** As migrations `…018` e `…019` colocaram 30 imóveis fictícios no banco — 20 apartamentos na capital e 10 chácaras e sítios no interior —, com endereços inventados e fotos de banco de imagens, e todos já aparecem na vitrine. Saem com `delete from public.imoveis where id::text like 'a5e10000-%' or id::text like 'a5e20000-%';` — ver README.md, "As migrations 018 e 019 são opcionais"
+- **Antes de divulgar o site, limpar o seed de demonstração.** A migration `…025` coloca 30 imóveis fictícios no banco — 15 apartamentos para locação e 10 para venda em São Paulo, mais 5 casas no interior —, com endereços inventados e fotos de banco de imagens, e todos já aparecem na vitrine. Saem com `delete from public.imoveis where id::text like 'a5e30000-%';` — ver README.md, "A migration 025 é o estoque de demonstração". Ela é o seed que acompanha o projeto: as antigas `…018` e `…019` foram removidas para que uma instalação nova não recebesse os dois lotes e ficasse com 60 imóveis de mentira na vitrine
 
 ## Integrações
 

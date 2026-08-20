@@ -72,6 +72,7 @@ O clique é registrado em `visualizacoes_site` **sem segurar a navegação**: se
 - Node.js 20 ou superior
 - npm 10 ou superior
 - Uma conta no Supabase com o projeto provisionado e as migrations aplicadas
+- O Supabase CLI, que roda por `npx supabase …` sem precisar instalar nada
 
 ### Instalação
 
@@ -82,6 +83,8 @@ npm run dev
 ```
 
 A aplicação sobe em `http://localhost:5173`. Se a porta estiver ocupada, o Vite escolhe a próxima livre e imprime o endereço real no terminal.
+
+**Isso sobe o painel e a vitrine, e só.** Os dois falam direto com o banco, então funcionam sem mais nada. A API que o agente de IA consome é uma Edge Function que roda **dentro do projeto Supabase** e precisa ser publicada à parte, num passo próprio: ver "Publicando a Edge Function da API", logo abaixo.
 
 ### Scripts
 
@@ -137,18 +140,46 @@ select jobname, schedule, active from cron.job;
 
 Essa conferência não é zelo. É o único ponto da instalação que **falha sem dar erro**. O job mantém `crm_imobiliaria.minutos_ultima_mensagem` no valor real, e sem ele o painel funciona, a vitrine publica e a API responde exatamente como deveriam; o que quebra é a régua de follow-up do agente de IA, que passa a ler um número congelado no instante da última mensagem, dentro de uma conversa que ninguém no painel está acompanhando. BANCO.md, seção 4.1, explica o job; a seção 8 traz o diagnóstico quando a lista sai vazia.
 
-### As migrations 018 e 019 são opcionais, e não devem ir para produção
+### Publicando a Edge Function da API
 
-Duas migrations inserem **estoque fictício**, para que o painel, a vitrine, o Dashboard e a API possam ser vistos com dados, em vez de com telas vazias:
+**Este passo é obrigatório, não acontece sozinho e é o que mais some do roteiro.** O painel e a vitrine falam direto com o banco, então sobem sem ele. A API que o agente de IA consome é código que precisa rodar dentro do projeto Supabase, e mandar esse código para lá é um comando à parte: nem `npm run dev`, nem `git push`, nem o deploy do frontend na Vercel publicam a função.
+
+```bash
+npx supabase login
+npx supabase functions deploy api --project-ref SEU_PROJECT_REF
+```
+
+Não é preciso rodar `supabase link`: com `--project-ref` o comando já sabe o destino, e você pula a etapa que pede a senha do banco. Também não é preciso passar `--no-verify-jwt`, porque `verify_jwt = false` já está declarado em [supabase/config.toml](supabase/config.toml).
+
+**Confira que subiu**, sem token, esperando a recusa de autenticação:
+
+```bash
+curl -X POST "https://SEU-PROJETO.supabase.co/functions/v1/api/imoveis/buscar" \
+  -H "Content-Type: application/json" -d '{}'
+```
+
+| Resposta | O que significa |
+|---|---|
+| `{"code":"NOT_FOUND","message":"Requested function was not found"}` | A função não está publicada nesse projeto. É o estado de quem pulou este passo |
+| `{"sucesso":false,"erro":"nao_autorizado", …}` | Publicada e respondendo. É o resultado esperado, e o cabeçalho `Authorization` que falta ali é justamente o que o agente já manda |
+
+**A conferência não é zelo, é a única forma de perceber.** Sem a função, nada dá erro: o painel abre, a vitrine publica, os imóveis aparecem e o site pode até ser divulgado. O que não funciona é o agente de IA, e a falha só se manifesta dentro do N8N, num lugar onde a suspeita natural recai sobre o fluxo, que está certo. É a mesma classe de armadilha do job de relógio, logo acima.
+
+**Nenhum secret precisa ser configurado para isto funcionar.** `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` são injetadas automaticamente pelo Supabase em toda Edge Function publicada. As variáveis da seção 5 têm padrão e só existem para mudar o padrão.
+
+**Republique sempre que mexer em qualquer arquivo de [supabase/functions/](supabase/functions/).** Editar o código aqui não muda nada no ar até o deploy rodar de novo.
+
+### A migration 025 é o estoque de demonstração, e não deve sobreviver à divulgação
+
+Uma migration insere **estoque fictício**, para que o painel, a vitrine, o Dashboard e a API possam ser vistos com dados, em vez de com telas vazias:
 
 | Migration | O que insere |
 |---|---|
-| [018](supabase/migrations/20260811000018_seed_imoveis_demonstracao.sql) | 30 registros: 20 apartamentos na capital, em Moema, Brooklin, Santo Amaro, Tatuapé, Penha e Casa Verde |
-| [019](supabase/migrations/20260811000019_seed_rurais_demonstracao.sql) | 10 chácaras e sítios no interior, de Atibaia a Holambra |
+| [025](supabase/migrations/20260819000025_seed_imoveis_sp_zona_sul_oeste.sql) | 30 imóveis em São Paulo, zonas sul e oeste, mais o interior: 15 apartamentos para locação, 10 para venda e 5 casas para venda |
 
-Diferente das outras dezessete, elas são **conteúdo, não estrutura**. Endereços, proprietários e telefones são inventados, e as fotos são de banco de imagens e se repetem entre os anúncios.
+Diferente de todas as outras, ela é **conteúdo, não estrutura**. Endereços, proprietários e telefones são inventados, e as fotos são de banco de imagens e se repetem entre os anúncios.
 
-A 019 existe por um motivo além do volume: com estoque de um tipo só, filtrar por tipo devolve sempre a lista inteira, e um filtro quebrado passa despercebido. Ela também é o que dá amplitude à busca por características da API, já que chácara e apartamento não compartilham quase nenhum diferencial.
+A composição não é aleatória, e é o que faz o sistema poder ser avaliado de verdade: **duas finalidades e mais de um tipo de imóvel.** Com estoque de uma finalidade só, o primeiro nível de navegação da vitrine devolve sempre a lista inteira; com um tipo só, o mesmo acontece com o filtro de tipo. Nos dois casos um filtro quebrado passaria despercebido, porque a tela cheia parece uma tela certa.
 
 > ⚠️ Não aplique numa instalação já divulgada ao público. Não existe publicação manual no ImobFlow: salvar é publicar, e o visitante não tem como saber que aquele anúncio é de demonstração.
 
@@ -156,8 +187,7 @@ Para remover tudo depois, uma linha, com as fotos saindo em cascata:
 
 ```sql
 delete from public.imoveis
- where id::text like 'a5e10000-%'    -- apartamentos da 018
-    or id::text like 'a5e20000-%';   -- chácaras e sítios da 019
+ where id::text like 'a5e30000-%';   -- os 30 imóveis da 025
 ```
 
 ---
@@ -293,14 +323,116 @@ Isso é consciente, e tem consequências:
 ### Publicando a função
 
 ```bash
-supabase functions deploy api --project-ref <ref> --no-verify-jwt
+npx supabase functions deploy api --project-ref <ref>
 ```
 
-`--no-verify-jwt` é necessário: o `Authorization` desta função carrega o token do ImobFlow, não um JWT do Supabase Auth. Com a verificação ligada, o gateway rejeitaria toda requisição antes de o código rodar. A tranca passa a ser a validação de token, que é a primeira coisa executada em qualquer requisição.
+O roteiro completo, com a conferência de que a função subiu, está na seção 4, em "Publicando a Edge Function da API". **Sem esse comando não existe API**, por mais que o código esteja no repositório.
+
+A flag `--no-verify-jwt` não é mais necessária, porque `verify_jwt = false` já está em [supabase/config.toml](supabase/config.toml). O motivo de ele estar desligado permanece: o `Authorization` desta função carrega o token do ImobFlow, não um JWT do Supabase Auth. Com a verificação ligada, o gateway rejeitaria toda requisição antes de o código rodar. A tranca passa a ser a validação de token, que é a primeira coisa executada em qualquer requisição.
 
 ---
 
-## 6. Índice da documentação
+## 6. Colocando no ar
+
+Até aqui o sistema roda na sua máquina. Este capítulo é o que falta para ele existir na internet, com endereço que o cliente acessa e API que o agente de IA alcança.
+
+São **duas publicações independentes**, e é importante saber disso antes de começar, porque uma não faz a outra:
+
+| O quê | Onde | O que quebra se faltar |
+|---|---|---|
+| Banco e Edge Function | Supabase | Sem o banco, nada funciona. Sem a função, só o agente de IA para de funcionar, **e sem dar erro** |
+| Site e painel | Vercel | O sistema fica preso no seu `localhost` |
+
+### 6.1 O que ter em mãos
+
+- **Conta no Supabase e conta na Vercel.** Os planos gratuitos dão conta de uma imobiliária
+- **O repositório no GitHub.** A Vercel publica a partir dele
+- **Um access token do Supabase**, gerado em [supabase.com/dashboard/account/tokens](https://supabase.com/dashboard/account/tokens)
+
+**Sobre o token, duas coisas que precisam ser ditas juntas.** Ele tem prazo de expiração, que você escolhe na criação, e é isso que torna aceitável usá-lo aqui. Mas ele **vale para a conta inteira, não para um projeto**: não existe token com escopo limitado no Supabase, e enquanto estiver válido ele alcança todos os projetos da conta, com os mesmos poderes que você tem. Gere um com prazo curto, use, e **revogue na mesma página ao terminar**.
+
+**Se for usar o Claude Code para publicar, crie antes o arquivo `.claude/settings.json`** na raiz do projeto:
+
+```json
+{
+  "permissions": {
+    "allow": ["Bash(npx supabase:*)"]
+  }
+}
+```
+
+Sem ele o agente é barrado ao publicar, e a mensagem de bloqueio não deixa claro que o problema é de permissão e não do Supabase. O prejuízo é meia hora procurando defeito no lugar errado.
+
+### 6.2 O Supabase, conduzido pela IA
+
+Cole o texto abaixo no chat do Claude Code, ou do agente que você usar. Ele foi escrito para a IA **perguntar o que falta e esperar**, em vez de supor:
+
+```
+Vamos publicar o ImobFlow no Supabase. Antes de rodar qualquer comando, me pergunte
+e espere a minha resposta:
+
+1. o nome do projeto a criar
+2. o meu access token do Supabase
+3. a região (sa-east-1 para clientes no Brasil)
+
+Com isso em mãos, faça na ordem, conferindo cada passo antes de seguir para o próximo:
+
+- criar o projeto no Supabase
+- aplicar todas as migrations de supabase/migrations, em ordem numérica
+- publicar a Edge Function api
+- testar POST /functions/v1/api/imoveis/buscar sem token, e confirmar que a
+  resposta é nao_autorizado e não NOT_FOUND
+- conferir o job de relógio com: select jobname, active from cron.job
+- me devolver a URL do projeto e a chave anônima, que eu preciso para o .env
+  e para a Vercel
+
+Se algum passo falhar, pare e me mostre o erro em vez de seguir adiante.
+```
+
+São estes os comandos que a IA vai executar. Estão aqui para você acompanhar, e para poder rodar à mão se preferir:
+
+```bash
+npx supabase projects create "NOME" --org-id <org> --db-password "SENHA" --region sa-east-1
+npx supabase db push --project-ref <ref> --password "SENHA"
+npx supabase functions deploy api --project-ref <ref>
+```
+
+**O estoque de demonstração vem junto, e isso é de propósito.** A migration 025 insere 30 imóveis fictícios, e roda como todas as outras: o `db push` aplica a pasta inteira, em ordem, e não existe forma de pular um arquivo. Um painel recém-instalado sem nenhum imóvel não deixa ver o Dashboard, os filtros da vitrine nem a busca da API funcionando, e é justamente na primeira meia hora que alguém quer olhar isso. Eles saem numa linha quando a carteira real entrar, e a seção 6.4 traz o comando.
+
+**Guarde a senha do banco que for escolhida na criação.** Ela não é recuperável depois, só redefinível, e o `db push` precisa dela.
+
+Quem preferir não usar IA nem CLI tem o caminho manual já descrito na seção 4: criar o projeto pelo painel do Supabase e colar as migrations no SQL Editor, uma a uma, em ordem. **O que não tem caminho pelo painel é a Edge Function** — ela sai de "Publicando a Edge Function da API", também na seção 4.
+
+### 6.3 A Vercel
+
+1. **Suba o projeto para o GitHub**, se ainda não estiver lá
+2. Na Vercel, **Add New → Project**, e importe o repositório
+3. O framework é detectado como Vite. Build `npm run build`, saída `dist`. Não há o que ajustar
+4. **Em Environment Variables, cadastre as duas** da seção 5: `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`, com os valores que a IA devolveu no passo anterior. **Elas não vêm do `.env`**, que está no `.gitignore` e não sobe para o GitHub
+5. **Deploy**
+
+O [vercel.json](vercel.json) já está no repositório e não precisa de ajuste. Ele reescreve toda rota para o `index.html`, que é o que impede um link direto de imóvel, mandado por WhatsApp, de cair em 404 ao ser aberto do zero.
+
+### 6.4 Depois que estiver no ar, três coisas
+
+**Preencha o endereço do site** em Configurações → Dados, com o domínio da Vercel. Enquanto `configuracoes.url_site` estiver vazia, a API devolve `url` nula em toda ficha de imóvel e o agente atende sem nunca mandar o link das fotos. Não dá erro em lugar nenhum, que é o que torna fácil esquecer.
+
+**Revogue o access token** em [supabase.com/dashboard/account/tokens](https://supabase.com/dashboard/account/tokens). Ele já cumpriu o papel, e continuar válido só aumenta a superfície.
+
+**Apague o estoque de demonstração** antes de divulgar o endereço. Os 30 imóveis da migration 025 já estão na vitrine, com endereços inventados e fotos de banco de imagens que se repetem entre os anúncios, e o visitante não tem como saber que são de mentira:
+
+```sql
+delete from public.imoveis
+ where id::text like 'a5e30000-%';   -- os 30 imóveis da 025
+```
+
+### 6.5 O que continua em aberto depois do deploy
+
+A **prévia do link no WhatsApp** sai sem foto e sem título. O ImobFlow é uma SPA: o HTML servido é uma casca vazia e as tags Open Graph só existem depois que o React monta, enquanto o robô de prévia lê o HTML cru e vai embora. Fechar isso é decisão de publicação, e são duas saídas: pré-renderização no build, ou uma função de borda que responda ao user-agent do robô com o HTML já preenchido. **O link funciona ao ser tocado** — o que falta é só a miniatura.
+
+---
+
+## 7. Índice da documentação
 
 | Documento | Quando abrir |
 |---|---|
@@ -311,7 +443,7 @@ supabase functions deploy api --project-ref <ref> --no-verify-jwt
 
 ---
 
-## 7. Status do projeto
+## 8. Status do projeto
 
 | Etapa | Escopo | Situação |
 |---|---|---|
@@ -325,7 +457,7 @@ supabase functions deploy api --project-ref <ref> --no-verify-jwt
 | 8 | Configurações | **Concluída** |
 | 9 | API pública | **Concluída** |
 | 10 | Auditoria de segurança | Pendente |
-| 11 | Deploy seguro para o GitHub | Pendente |
+| 11 | Deploy | **Roteirizada** na seção 6, "Colocando no ar". Cada instalação a executa uma vez |
 
 ### O que a Etapa 9 entregou
 

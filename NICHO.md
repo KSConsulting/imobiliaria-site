@@ -281,7 +281,7 @@ Também não mexa em: `ON DELETE RESTRICT` de `imoveis.id_tipo_imovel` (protege 
 
 Do zero ao primeiro imóvel publicado. **A ordem importa**: cada bloco depende do anterior, e pular etapa aqui produz retrabalho — o caso mais comum é cadastrar trinta imóveis antes de acertar os tipos e ter que reclassificar todos depois.
 
-Do passo 6 em diante, **tudo acontece dentro do painel**. Só os dois blocos de código continuam exigindo editor: a cor da marca e os textos do site.
+Do passo 6 em diante, **quase tudo acontece dentro do painel**. Continuam fora dele apenas três pontos: a cor da marca e os textos do site, que pedem editor, e a publicação da Edge Function da API, no passo 29, que pede terminal.
 
 ### Banco e acesso
 
@@ -340,7 +340,8 @@ O bloco no topo da aba vai listar o que falta. Ele é o roteiro desta seção: q
 
 ### Integrações — `Configurações → API` (a partir da Etapa 9)
 
-29. **Gerar o token** com um nome que identifique o consumidor — "Agente WhatsApp", "Integração portal". Um por consumidor: é o que permite revogar um sem derrubar o outro. **Copie no momento da criação**, que é quando ele precisa ir para a automação
-30. **Configurar o agente de IA** com esse token e o endpoint da API
-31. **Testar o fluxo completo:** mensagem no WhatsApp → lead criado → visita agendada → card se movendo sozinho no Kanban do painel
-32. **Conferir em `Configurações → Logs`** que as ações do agente aparecem na trilha, com o nome do consumidor
+29. **Publicar a Edge Function da API**, com `npx supabase login` e depois `npx supabase functions deploy api --project-ref <ref-do-projeto>`. É o único passo desta seção que não acontece no painel, e o único de toda a implantação que **falha sem dar erro**: sem ele o painel abre, a vitrine publica, os imóveis aparecem e o site pode ser divulgado, mas toda chamada do agente responde `NOT_FOUND` e a suspeita recai sobre o fluxo do N8N, que está certo. Confirme antes de seguir, com o `curl` da seção 4 do README: a resposta certa é `nao_autorizado`, não `NOT_FOUND`
+30. **Gerar o token** com um nome que identifique o consumidor — "Agente WhatsApp", "Integração portal". Um por consumidor: é o que permite revogar um sem derrubar o outro. **Copie no momento da criação**, que é quando ele precisa ir para a automação
+31. **Configurar o agente de IA** com esse token e o endpoint da API
+32. **Testar o fluxo completo:** mensagem no WhatsApp → lead criado → visita agendada → card se movendo sozinho no Kanban do painel
+33. **Conferir em `Configurações → Logs`** que as ações do agente aparecem na trilha, com o nome do consumidor
