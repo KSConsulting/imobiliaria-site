@@ -22,6 +22,7 @@ import {
 } from '../_compartilhado/datas.ts'
 import { AcoesApi, AcoesEscrita, registrar } from '../_compartilhado/registro.ts'
 import { fusoDaImobiliaria } from '../_compartilhado/configuracoes.ts'
+import { normalizarCodigo } from '../_compartilhado/imoveis.ts'
 import { normalizarWhatsapp } from '../_compartilhado/telefone.ts'
 import type { Consumidor } from '../_compartilhado/autenticacao.ts'
 
@@ -222,13 +223,43 @@ export async function agendar(
   // oferecer um horário — que é quando a conversa esfria.
   let imovel: { id: string; codigo: string } | null = null
   if (typeof corpo.codigo_imovel === 'string' && corpo.codigo_imovel.trim()) {
-    const codigo = corpo.codigo_imovel.trim().toUpperCase()
+    const escrito = corpo.codigo_imovel.trim()
+
+    // Mesma normalização de `/imoveis/buscar`, e por isso ela mora em
+    // `_compartilhado`. Antes daqui a comparação era o texto cru contra
+    // a coluna, e `IMV-029` recusava a visita inteira de um imóvel que
+    // existe: o trigger 2 grava o número sempre com quatro dígitos, de
+    // modo que `29`, `029` e `0029` só podem ser o mesmo registro. O
+    // sintoma era da pior espécie, porque o agente conseguia consultar
+    // aquele mesmo código e falhava só ao marcar, e a frase ainda pedia
+    // ao cliente que conferisse um código que ele tinha lido certo.
+    const codigo = normalizarCodigo(escrito)
+
+    // Código irreconhecível não vira busca. É `parametro_invalido` e não
+    // `imovel_nao_encontrado` porque as duas causas são diferentes e
+    // pedem coisas diferentes de quem lê o log: aqui o campo veio com
+    // algo que não é código, o que na prática costuma ser mapeamento
+    // solto do N8N. Para a conversa dá no mesmo, e é de propósito: as
+    // duas mensagens terminam pedindo o código.
+    if (!codigo) {
+      return erro(
+        'parametro_invalido',
+        `Não reconheci ${escrito} como código de imóvel. Eles têm o formato IMV-0001. Qual é o código do imóvel que você quer visitar?`,
+      )
+    }
+
     const { data } = await supabase
       .from('imoveis')
       .select('id, codigo')
       .eq('codigo', codigo)
       .maybeSingle()
 
+    // Código válido que não existe **recusa a visita**, mesmo o campo
+    // sendo opcional. Marcar assim mesmo gravaria um agendamento sem
+    // imóvel para uma pessoa que citou um, e o corretor chegaria na
+    // visita sem saber o que mostrar. A frase segue oferecendo a saída,
+    // porque quem decide é o cliente: se ele responder que tanto faz, o
+    // agente refaz a chamada sem `codigo_imovel` e a visita é marcada.
     if (!data) {
       return erro(
         'imovel_nao_encontrado',

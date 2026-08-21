@@ -261,7 +261,7 @@ IMV-0002: …"
       { nome: 'data', tipo: 'AAAA-MM-DD', obrigatorio: true, descricao: '' },
       { nome: 'hora', tipo: 'HH:MM', obrigatorio: true, descricao: 'Aceita também "15h".' },
       { nome: 'nome', tipo: 'texto', obrigatorio: false, descricao: 'Gravado no lead quando ele é criado agora.' },
-      { nome: 'codigo_imovel', tipo: 'texto', obrigatorio: false, descricao: 'Opcional de propósito — quem chega por indicação marca antes de escolher o imóvel.' },
+      { nome: 'codigo_imovel', tipo: 'texto', obrigatorio: false, descricao: 'Opcional de propósito: quem chega por indicação marca antes de escolher o imóvel. Aceita IMV-29, IMV029 e imv 29, tudo como IMV-0029. Vindo preenchido e não batendo com imóvel nenhum, a visita é recusada.' },
       { nome: 'id_corretor', tipo: 'uuid', obrigatorio: false, descricao: 'Sem ele, a API escolhe o corretor livre menos carregado.' },
       { nome: 'observacoes', tipo: 'texto', obrigatorio: false, descricao: 'Anotação livre.' },
     ],

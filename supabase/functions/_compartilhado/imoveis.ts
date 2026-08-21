@@ -41,6 +41,44 @@ export const CAMPOS_RESUMO = `
   imoveis_fotos ( url, ordem, capa )
 `
 
+/**
+ * Normaliza um código para o formato gravado no banco.
+ *
+ * Aceita o que o agente escreve de verdade: `IMV0001`, `imv-0001`,
+ * `imv 1`, com espaço sobrando. Devolve `null` quando não sobra um
+ * código plausível.
+ *
+ * **O prefixo é lido do que veio, nunca escrito aqui.** Ele muda por
+ * nicho, vira `VEI` numa concessionária, e está registrado assim no
+ * REPLICACAO.md. Um `'IMV-'` fixo nesta função seria o tipo de coisa que
+ * só aparece na primeira replicação.
+ *
+ * O zero à esquerda é completado até quatro dígitos porque é assim que o
+ * trigger 2 gera, com `lpad(v_numero, 4, '0')`: `IMV-1`, `IMV-029` e
+ * `IMV-0029` são o mesmo imóvel, e não existe ambiguidade possível,
+ * porque nenhum código nasce com menos de quatro dígitos. Acima de 9999
+ * o número cresce sozinho, então nada é cortado.
+ *
+ * **Mora aqui, e não no handler, porque tem dois consumidores.** Nasceu
+ * em `api/imoveis.ts` servindo só à busca, e a consequência apareceu na
+ * primeira visita recusada: `/imoveis/buscar` achava o `IMV-029` e
+ * `/agenda/agendar` não, então o mesmo código servia para perguntar
+ * sobre o imóvel e falhava na hora de marcar, dentro da mesma conversa.
+ * É a mesma regra do `telefone.ts`: uma função só, de cada lado da
+ * fronteira.
+ */
+export function normalizarCodigo(bruto: string): string | null {
+  const limpo = bruto.toUpperCase().replace(/[^A-Z0-9]/g, '')
+  const partes = limpo.match(/^([A-Z]{2,5})(\d{1,10})$/)
+  if (!partes) return null
+
+  const [, prefixo, numero] = partes
+  const semZeros = numero.replace(/^0+/, '') || '0'
+  const acertado = semZeros.length < 4 ? semZeros.padStart(4, '0') : semZeros
+
+  return `${prefixo}-${acertado}`
+}
+
 interface FotoBruta {
   url: string
   ordem: number

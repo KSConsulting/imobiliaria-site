@@ -9,6 +9,7 @@ import {
   fraseDoImovel,
   listaDeImoveis,
   moeda,
+  normalizarCodigo,
 } from '../_compartilhado/imoveis.ts'
 import { urlDoSite } from '../_compartilhado/configuracoes.ts'
 import { listar } from '../_compartilhado/datas.ts'
@@ -96,34 +97,6 @@ export async function imovelPorCodigo(
 
 /** Teto de fichas por chamada. Ver o comentário em `imoveisPorCodigos`. */
 const MAXIMO_CODIGOS = 5
-
-/**
- * Normaliza um código para o formato gravado no banco.
- *
- * Aceita o que o agente escreve de verdade: `IMV0001`, `imv-0001`,
- * `imv 1`, com espaço sobrando. Devolve `null` quando não sobra um
- * código plausível.
- *
- * **O prefixo é lido do que veio, nunca escrito aqui.** Ele muda por
- * nicho, vira `VEI` numa concessionária, e está registrado assim no
- * REPLICACAO.md. Um `'IMV-'` fixo nesta função seria o tipo de coisa que
- * só aparece na primeira replicação.
- *
- * O zero à esquerda é completado até quatro dígitos porque é assim que o
- * trigger 2 gera: `IMV-1` e `IMV-0001` são o mesmo imóvel. Acima de
- * 9999 o número cresce sozinho, então nada é cortado.
- */
-export function normalizarCodigo(bruto: string): string | null {
-  const limpo = bruto.toUpperCase().replace(/[^A-Z0-9]/g, '')
-  const partes = limpo.match(/^([A-Z]{2,5})(\d{1,10})$/)
-  if (!partes) return null
-
-  const [, prefixo, numero] = partes
-  const semZeros = numero.replace(/^0+/, '') || '0'
-  const acertado = semZeros.length < 4 ? semZeros.padStart(4, '0') : semZeros
-
-  return `${prefixo}-${acertado}`
-}
 
 /**
  * Fichas de vários imóveis de uma vez.

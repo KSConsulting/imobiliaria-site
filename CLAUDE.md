@@ -651,6 +651,15 @@ Quatro coisas que vieram da forma de lista e continuam valendo:
 
 `normalizarCodigo` aceita `IMV0001`, `imv-0001`, `imv 1` e `IMV-1`, completando o zero à esquerda porque é assim que o trigger 2 gera. **O prefixo é lido do que veio, nunca escrito na função:** ele vira `VEI` numa concessionária, e um `'IMV-'` fixo ali só apareceria na primeira replicação.
 
+**Ela vive em `_compartilhado/imoveis.ts`, e o motivo é uma visita recusada.** Nasceu dentro de `api/imoveis.ts`, servindo só à busca, e `POST /agenda/agendar` comparava o texto cru contra a coluna. O resultado é que `IMV-029` achava a ficha do imóvel e não conseguia marcar a visita dele, na mesma conversa: o agente consultava, o cliente escolhia o horário, e a resposta pedia que ele conferisse um código que tinha lido certo. Não há ambiguidade a resolver, porque o trigger 2 usa `lpad(v_numero, 4, '0')` e nenhum código nasce com menos de quatro dígitos — `29`, `029` e `0029` só podem ser o mesmo registro. **Endpoint novo que receba código de imóvel importa de lá**, pela mesma regra do `telefone.ts`.
+
+Duas coisas ficaram de fora de propósito:
+
+- **Número solto continua recusado.** `29` sem prefixo exigiria inventar o `IMV-`, que é exatamente o que a função não faz. Na prática não aparece: o código chega ao agente por `mensagemDeInteresse` ou pela ficha, sempre com o prefixo
+- **`GET /imoveis/codigo/:codigo` não foi alinhado.** É rota herdada, marcada para sair quando o N8N apontar só para `/imoveis/buscar`, e ela valida o formato sem completar zero. Um `IMV-029` ali responde "não encontrei"
+
+**Em `agendar`, código que não resolve recusa a visita**, mesmo `codigo_imovel` sendo opcional. Marcar assim mesmo gravaria um agendamento sem imóvel para quem citou um, e o corretor chegaria sem saber o que mostrar. A mensagem oferece a saída em vez de decidir por ela: se o cliente responder que tanto faz, o agente repete a chamada sem o campo. Formato irreconhecível sai como `parametro_invalido` e código inexistente como `imovel_nao_encontrado` — a conversa é a mesma, mas só a primeira denuncia mapeamento solto do N8N na trilha de `logs_sistema`.
+
 ### O total da busca é o do resultado, não o da página
 
 `POST /imoveis/buscar` devolve `total` ao lado de `dados`, e a `mensagem` anuncia o total: *"Encontrei 18 imóveis. Estes são os 5 primeiros:"*.
