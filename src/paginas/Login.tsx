@@ -107,8 +107,10 @@ export function Login() {
   const nome = configuracoes?.nome_negocio
   const logo = configuracoes?.logo_url
 
+  // A primeira trilha da grade é a mais larga porque é a da coluna
+  // visual, que fica à esquerda. Ver o comentário dela mais abaixo.
   return (
-    <div className="grid min-h-dvh lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+    <div className="grid min-h-dvh lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
       {/* ---------------- Coluna do formulário ---------------- */}
       <div className="flex items-center justify-center bg-superficie px-6 py-14 sm:px-10">
         <div className="w-full max-w-sm">
@@ -202,14 +204,23 @@ export function Login() {
         </div>
       </div>
 
-      {/* ---------------- Coluna visual ---------------- */}
-      <div className="relative hidden overflow-hidden bg-destaque lg:block">
+      {/* ---------------- Coluna visual ----------------
+          Ela aparece à ESQUERDA na tela, apesar de vir depois no JSX.
+          A inversão é feita por `lg:order-first` de propósito, e não
+          movendo o bloco: assim o formulário continua sendo o primeiro
+          elemento do documento, que é o que um leitor de tela encontra
+          antes dos quatro cartões. E se um dia o `hidden lg:block` sair,
+          o painel cai abaixo do formulário no celular, não acima.
+
+          As trilhas de `grid-cols` acompanham: a mais larga (1.1fr) é a
+          primeira, porque a mais larga é esta coluna. */}
+      <div className="relative hidden overflow-hidden bg-destaque lg:order-first lg:block">
         <div
           aria-hidden
           className="absolute inset-0 opacity-[0.13]"
           style={{
             backgroundImage:
-              'radial-gradient(circle at 22% 18%, white 0, transparent 42%), radial-gradient(circle at 82% 78%, white 0, transparent 46%)',
+              'radial-gradient(circle at 78% 18%, white 0, transparent 42%), radial-gradient(circle at 18% 78%, white 0, transparent 46%)',
           }}
         />
         {/* Malha de planta baixa, discreta o bastante para não competir
@@ -225,11 +236,11 @@ export function Login() {
         />
         <div
           aria-hidden
-          className="absolute -right-24 -top-24 size-[26rem] rounded-full border border-white/10"
+          className="absolute -left-24 -top-24 size-[26rem] rounded-full border border-white/10"
         />
         <div
           aria-hidden
-          className="absolute -bottom-32 -left-20 size-[30rem] rounded-full border border-white/10"
+          className="absolute -bottom-32 -right-20 size-[30rem] rounded-full border border-white/10"
         />
 
         <div className="relative flex h-full flex-col justify-between gap-10 p-14">

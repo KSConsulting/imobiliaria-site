@@ -423,7 +423,7 @@ A vitrine é construída **a partir da tela pequena**. O acesso chega majoritari
 
 ### A coluna visual do login repete a sidebar
 
-O login é a única tela que não pertence a nenhuma das duas áreas: é a porta do painel, mas quem a vê ainda não entrou. A coluna verde à direita traz quatro cartões com ícones do ramo, e cada um **nomeia uma área que existe de verdade na sidebar** — carteira de imóveis, agenda de visitas, funil de atendimento e vitrine sempre no ar.
+O login é a única tela que não pertence a nenhuma das duas áreas: é a porta do painel, mas quem a vê ainda não entrou. A coluna verde à esquerda traz quatro cartões com ícones do ramo, e cada um **nomeia uma área que existe de verdade na sidebar** — carteira de imóveis, agenda de visitas, funil de atendimento e vitrine sempre no ar.
 
 Isso é uma escolha de conteúdo, não de decoração: é a primeira tela de toda implantação, e quem abre pela primeira vez descobre ali o que o sistema faz sem precisar entrar. Ícone genérico de tecnologia ocuparia o mesmo espaço sem dizer nada.
 

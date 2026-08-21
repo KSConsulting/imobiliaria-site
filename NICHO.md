@@ -131,7 +131,7 @@ O site público tem duas categorias de texto, e elas mudam em lugares diferentes
 
 Estão todos num arquivo só de propósito: personalizar o site é a tarefa mais frequente da implantação, e ninguém deveria precisar caçar frase dentro de JSX para fazer isso.
 
-**A tela de login não está nesse arquivo, e não precisa estar.** O nome da imobiliária ali vem das Configurações, como em todo o resto: salvou o nome novo, o login mostra o nome novo. O que é fixo é a coluna verde à direita, com quatro cartões que nomeiam as áreas do painel (carteira de imóveis, agenda de visitas, funil de atendimento e vitrine no ar). Esse texto descreve o **sistema**, não a imobiliária, e por isso serve igual em qualquer implantação. Se ainda assim quiser mexer, a lista está em `AREAS`, no topo de `src/paginas/Login.tsx`.
+**A tela de login não está nesse arquivo, e não precisa estar.** O nome da imobiliária ali vem das Configurações, como em todo o resto: salvou o nome novo, o login mostra o nome novo. O que é fixo é a coluna verde à esquerda, com quatro cartões que nomeiam as áreas do painel (carteira de imóveis, agenda de visitas, funil de atendimento e vitrine no ar). Esse texto descreve o **sistema**, não a imobiliária, e por isso serve igual em qualquer implantação. Se ainda assim quiser mexer, a lista está em `AREAS`, no topo de `src/paginas/Login.tsx`.
 
 **Ao reescrever as perguntas frequentes, cuidado com um detalhe.** As respostas que vêm no padrão são genéricas por decisão: nenhuma cita prazo, taxa ou percentual. É aí que o texto padrão vira informação errada na mão do cliente — uma resposta dizendo "análise em 48 horas" numa imobiliária que leva uma semana gera reclamação com razão. Se for citar número, cite o número daquela imobiliária.
 
