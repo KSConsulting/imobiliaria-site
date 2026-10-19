@@ -96,10 +96,17 @@ Convenções válidas para todas as tabelas:
 | `id` | uuid | sim | PK. FK → `auth.users.id` **ON DELETE CASCADE** |
 | `nome` | text | sim | |
 | `email` | text | sim | UNIQUE |
+| `liberado` | boolean | sim | `false`. Acesso ao painel. Ver abaixo |
 | `created_at` | timestamptz | sim | `now()` |
 | `updated_at` | timestamptz | sim | `now()`, mantido por trigger |
 
 **Índices:** PK em `id`; único em `email`.
+
+**`liberado` é o que separa uma conta de um usuário do painel** (migration `…026`). Não existir tela de cadastro não fecha o cadastro: o endpoint `/auth/v1/signup` do Supabase responde a qualquer um que tenha a chave anônima, e ela vai dentro do JavaScript da vitrine. E existir nesta tabela também não prova nada, porque o trigger de espelhamento cria a linha para **toda** conta do Auth, inclusive a de um visitante.
+
+Por isso a coluna nasce falsa, e toda política de `authenticated` pergunta por ela, via `fn_usuario_liberado()`. Conta nova abre sessão e não enxerga nada; o painel a desconecta no login, dizendo que o acesso não foi liberado. Quem liga é o desenvolvedor, no SQL Editor, ou outro usuário já liberado.
+
+É a **segunda** tranca. A primeira é desligar o cadastro público no Supabase (README, seção 6.4), e as duas são obrigatórias: sem a primeira, qualquer pessoa ainda enche `auth.users` de contas; sem a segunda, basta alguém religar a opção por engano para o painel inteiro ficar aberto.
 
 ---
 
@@ -757,7 +764,9 @@ order by start_time desc limit 5;
 
 ## 5. Políticas de RLS
 
-RLS ativo nas 13 tabelas. A política padrão é: **usuário autenticado pode tudo**. As exceções estão marcadas.
+RLS ativo nas 13 tabelas. A política padrão é: **usuário autenticado e liberado pode tudo**. As exceções estão marcadas.
+
+Onde a tabela abaixo diz `ALL` para `authenticated`, a expressão é `(select fn_usuario_liberado())`, e não `true` (migration `…026`). Sessão não é permissão: ver `usuarios.liberado`, seção 2.1. A única política de `authenticated` que não passa pela função é `usuarios_le_a_propria_linha`, que deixa a conta não liberada ler a própria linha para o login poder recusá-la com o motivo. As políticas de escrita do Storage seguem a mesma regra.
 
 | Tabela | `anon` (site público) | `authenticated` (painel) | `service_role` (API / agente de IA) |
 |---|---|---|---|
@@ -931,6 +940,7 @@ Aplicar **em ordem numérica**. Estão em [supabase/migrations/](supabase/migrat
 | `…023_horario_funcionamento.sql` | Etapa 8 — `configuracoes.horario_funcionamento` e a frase legível na view (seção 2.3) |
 | `…024_minutos_ultima_mensagem_cron.sql` | `pg_cron` e o job que envelhece `minutos_ultima_mensagem` (seção 4.1) |
 | `…025_seed_imoveis_sp_zona_sul_oeste.sql` | **Demonstração.** 30 imóveis fictícios: 15 apartamentos para locação, 10 para venda e 5 casas no interior |
+| `…026_usuarios_liberados.sql` | `usuarios.liberado`, `fn_usuario_liberado()` e todas as políticas de `authenticated` passando por ela (seções 2.1 e 5) |
 
 A migration `…025` é de demonstração e **sai antes de divulgar o site**. O comando está no README. Ela é a única de conteúdo: todas as outras são estrutura.
 

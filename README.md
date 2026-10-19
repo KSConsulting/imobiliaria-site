@@ -109,20 +109,27 @@ Não existe tela de cadastro. **Usuários são criados exclusivamente pelo desen
 
 1. Acesse **Authentication > Users** no painel do Supabase
 2. Clique em **Add user**, informe email e senha
-3. Pronto — um trigger em `auth.users` cria automaticamente o registro correspondente em `public.usuarios`
+3. Um trigger em `auth.users` cria automaticamente o registro correspondente em `public.usuarios`, **ainda sem acesso**
+4. **Libere o acesso** no SQL Editor:
+
+```sql
+update public.usuarios set liberado = true where email = 'usuario@exemplo.com';
+```
+
+Sem o passo 4, a pessoa digita a senha certa e o login responde que o acesso não foi liberado. É de propósito: o trigger cria a linha para **toda** conta do Auth, inclusive uma criada por fora pelo endpoint de cadastro, então ter conta não pode bastar. Ver BANCO.md, seção 2.1.
 
 Para conferir, ou para corrigir o nome exibido no painel:
 
 ```sql
-select id, nome, email from public.usuarios;
+select id, nome, email, liberado from public.usuarios;
 update public.usuarios set nome = 'Nome Completo' where email = 'usuario@exemplo.com';
 ```
 
 Se por algum motivo o registro não tiver sido criado, insira à mão usando **o mesmo `id`** gerado pelo Auth:
 
 ```sql
-insert into public.usuarios (id, nome, email)
-values ('<uuid-copiado-de-authentication-users>', 'Nome Completo', 'usuario@exemplo.com');
+insert into public.usuarios (id, nome, email, liberado)
+values ('<uuid-copiado-de-authentication-users>', 'Nome Completo', 'usuario@exemplo.com', true);
 ```
 
 ### Aplicando o banco em um projeto novo
@@ -413,7 +420,9 @@ Quem preferir não usar IA nem CLI tem o caminho manual já descrito na seção 
 
 O [vercel.json](vercel.json) já está no repositório e não precisa de ajuste. Ele reescreve toda rota para o `index.html`, que é o que impede um link direto de imóvel, mandado por WhatsApp, de cair em 404 ao ser aberto do zero.
 
-### 6.4 Depois que estiver no ar, três coisas
+### 6.4 Depois que estiver no ar, quatro coisas
+
+**Desligue o cadastro público** em **Authentication → Sign In / Providers → "Allow new users to sign up"**. Todo projeto novo do Supabase nasce com ele ligado, e não ter tela de cadastro não adianta: a chave anônima vai dentro do JavaScript do site, e com ela qualquer pessoa cria uma conta chamando a API do Auth direto. A migration `…026` já impede que essa conta enxergue alguma coisa, mas não impede que ela seja criada. Para conferir, `GET https://<projeto>.supabase.co/auth/v1/settings` com a chave anônima no cabeçalho `apikey` deve responder `"disable_signup": true`.
 
 **Preencha o endereço do site** em Configurações → Dados, com o domínio da Vercel. Enquanto `configuracoes.url_site` estiver vazia, a API devolve `url` nula em toda ficha de imóvel e o agente atende sem nunca mandar o link das fotos. Não dá erro em lugar nenhum, que é o que torna fácil esquecer.
 

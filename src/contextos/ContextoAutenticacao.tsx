@@ -10,8 +10,9 @@ interface ValorContexto {
   usuarioAuth: User | null
   /** Linha correspondente em `public.usuarios`, com o nome de exibição. */
   usuario: Usuario | null
-  /** Verdadeiro durante a verificação inicial da sessão. */
+  /** Verdadeiro durante a verificação da sessão e da liberação do usuário. */
   carregando: boolean
+  /** Sessão aberta **e** usuário liberado em `public.usuarios`. */
   autenticado: boolean
   entrar: (email: string, senha: string) => Promise<{ erro: string | null }>
   sair: () => Promise<void>
@@ -19,9 +20,15 @@ interface ValorContexto {
 
 const Contexto = createContext<ValorContexto | null>(null)
 
+const ACESSO_NAO_LIBERADO =
+  'Este acesso ainda não foi liberado. Peça a quem administra o painel para liberar o seu usuário.'
+
 export function ProvedorAutenticacao({ children }: { children: ReactNode }) {
   const [sessao, setSessao] = useState<Session | null>(null)
   const [usuario, setUsuario] = useState<Usuario | null>(null)
+  // Id cuja linha de `usuarios` já foi lida. Enquanto difere do id da
+  // sessão, a liberação ainda não é conhecida e nada é decidido.
+  const [idVerificado, setIdVerificado] = useState<string | null>(null)
   // Começa em `true`: até a verificação terminar não sabemos se há
   // sessão. É esse estado que impede o usuário autenticado de ser
   // jogado para o login por um instante ao recarregar a página.
@@ -48,13 +55,17 @@ export function ProvedorAutenticacao({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  // Carrega a linha de `public.usuarios` para obter o nome de exibição.
-  // O registro é criado automaticamente por trigger em auth.users, então
-  // ele existe — ver BANCO.md, "Espelhamento de auth.users".
+  // Carrega a linha de `public.usuarios`: o nome de exibição e, antes
+  // dele, a liberação. Sessão não é permissão: o cadastro do Supabase
+  // Auth responde a qualquer um com a chave anônima, e o trigger espelha
+  // toda conta em `usuarios`. Quem não está liberado é desconectado,
+  // porque o RLS já não lhe mostraria nada e o painel pareceria quebrado.
+  // Ver migration …026 e BANCO.md, "usuarios.liberado".
   useEffect(() => {
     const id = sessao?.user.id
     if (!id) {
       setUsuario(null)
+      setIdVerificado(null)
       return
     }
 
@@ -64,8 +75,11 @@ export function ProvedorAutenticacao({ children }: { children: ReactNode }) {
       .select('*')
       .eq('id', id)
       .maybeSingle()
-      .then(({ data }) => {
-        if (ativo) setUsuario(data)
+      .then(({ data, error }) => {
+        if (!ativo) return
+        setUsuario(data)
+        setIdVerificado(id)
+        if (!error && !data?.liberado) void supabase.auth.signOut()
       })
 
     return () => {
@@ -80,6 +94,20 @@ export function ProvedorAutenticacao({ children }: { children: ReactNode }) {
     })
 
     if (error) return { erro: traduzir(error.message) }
+
+    // A senha estava certa, mas isso só prova que a conta existe. O
+    // login é que precisa dizer o motivo da recusa: desconectado só pelo
+    // efeito acima, a pessoa voltaria ao formulário sem explicação.
+    const { data: linha } = await supabase
+      .from('usuarios')
+      .select('liberado')
+      .eq('id', data.user.id)
+      .maybeSingle()
+
+    if (!linha?.liberado) {
+      await supabase.auth.signOut()
+      return { erro: ACESSO_NAO_LIBERADO }
+    }
 
     void registrarLog({
       acao: Acoes.loginRealizado,
@@ -106,8 +134,8 @@ export function ProvedorAutenticacao({ children }: { children: ReactNode }) {
         sessao,
         usuarioAuth: sessao?.user ?? null,
         usuario,
-        carregando,
-        autenticado: Boolean(sessao),
+        carregando: carregando || Boolean(sessao && idVerificado !== sessao.user.id),
+        autenticado: Boolean(sessao && idVerificado === sessao.user.id && usuario?.liberado),
         entrar,
         sair,
       }}

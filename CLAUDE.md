@@ -743,6 +743,14 @@ A regra da Etapa 4 vale igual para as Edge Functions, e é a mais fácil de viol
 - Qualquer erro no fluxo tem potencial de afetar qualquer tabela, não só as de lead
 - Recomenda-se restringir o fluxo do agente a escrever apenas em `crm_imobiliaria`, **por disciplina de construção** — a credencial não impõe essa restrição tecnicamente
 
+### Sessão não é permissão
+
+Toda política de `authenticated` passa por `fn_usuario_liberado()`, que confere `usuarios.liberado` (migration `…026`). **Política nova também passa**, e nunca volta a ser `using (true)`.
+
+O motivo: o endpoint de cadastro do Supabase Auth responde a qualquer um que tenha a chave anônima, e ela está no bundle da vitrine. Não ter tela de cadastro não fecha nada. E o trigger de espelhamento cria a linha em `usuarios` para toda conta, então existir na tabela também não prova nada. Com `using (true)`, um visitante criava conta e lia leads, contato de proprietário e os tokens da API em texto puro.
+
+No painel, `autenticado` do `ProvedorAutenticacao` significa sessão **e** liberação, e o login recusa a conta não liberada dizendo o motivo. O cadastro público também precisa estar desligado no Supabase (README, seção 6.4): são duas trancas, e nenhuma dispensa a outra.
+
 ### `verify_jwt` desligado não é brecha
 
 `supabase/config.toml` declara `verify_jwt = false` para a função `api`, e precisa. Com ele ligado, o gateway do Supabase exigiria um JWT do Supabase Auth no `Authorization` — e o que vai ali é o token do ImobFlow. Desligar não abre a porta: transfere a tranca do gateway para `autenticar()`, a primeira coisa que roda em toda requisição, inclusive antes de reconhecer a rota.
