@@ -65,18 +65,18 @@ function Marca({ compacta }: { compacta: boolean }) {
           escuro: solta no fundo escuro, ela simplesmente desaparece, e
           o problema só apareceria na implantação de um cliente. */}
       {logo ? (
-        <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-white p-1">
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-claro p-1">
           <img src={logo} alt="" className="size-full object-contain" />
         </div>
       ) : (
-        <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-white text-sm font-bold text-destaque">
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-claro text-sm font-bold text-destaque-contraste">
           {(nome ?? 'I').charAt(0).toUpperCase()}
         </div>
       )}
 
       {!compacta &&
         (carregando ? (
-          <Skeleton className="h-4 w-32 bg-white/15" />
+          <Skeleton className="h-4 w-32 bg-claro/15" />
         ) : (
           <span className="truncate text-[0.9375rem] font-semibold tracking-tight text-sidebar-texto-forte">
             {nome ?? 'ImobFlow'}
@@ -121,7 +121,10 @@ function LinkMenu({
               isActive ? 'opacity-100' : 'opacity-0',
             )}
           />
-          <Icone className="size-[1.125rem] shrink-0" strokeWidth={isActive ? 2.25 : 1.9} />
+          <Icone
+            className={cn('size-[1.125rem] shrink-0', isActive && 'text-destaque')}
+            strokeWidth={isActive ? 2.25 : 1.9}
+          />
           {!compacta && <span className="truncate">{item.rotulo}</span>}
         </>
       )}

@@ -548,7 +548,7 @@ A **prévia do link no WhatsApp** sai sem foto e sem título. O ImobFlow é uma 
 - Sistema de design centralizado em `src/index.css`, com a cor de destaque como ponto único de troca
 - Login em `/login`, com sessão persistente e redirecionamento de quem já está autenticado. Nome e logo vêm das Configurações, e a coluna visual apresenta as quatro áreas do painel
 - Rotas protegidas sob `/painel`, com estado de carregamento na verificação inicial da sessão
-- Layout do painel: sidebar escura em verde profundo, agrupada, recolhível e responsiva, header com menu do usuário
+- Layout do painel: sidebar escura, agrupada, recolhível e responsiva, header com menu do usuário
 - As 11 rotas registradas, com placeholders navegáveis e duas páginas 404, uma por área
 - Contexto de configurações com Realtime no painel e leitura anônima na vitrine
 - Componentes globais, `registrarLog`, favicon próprio e título de aba dinâmico

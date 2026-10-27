@@ -55,8 +55,8 @@ export function BotaoWhatsapp({
         '[&_svg]:shrink-0',
         tamanho === 'grande' ? 'h-13 px-7 text-base' : 'h-11 px-5 text-sm',
         variante === 'destaque'
-          ? 'bg-destaque text-destaque-contraste shadow-elevado hover:bg-destaque-hover'
-          : 'border border-superficie/60 bg-superficie/12 text-superficie backdrop-blur-sm hover:bg-superficie/22',
+          ? 'bg-destaque text-destaque-contraste shadow-brilho hover:bg-destaque-hover'
+          : 'border border-claro/60 bg-claro/12 text-claro backdrop-blur-sm hover:bg-claro/22',
         className,
       )}
     >

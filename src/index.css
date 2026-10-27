@@ -17,77 +17,89 @@
    de uma vez só. As outras três derivam dela e devem ser ajustadas
    junto, mantendo a mesma matiz (o terceiro número do oklch).
 
-   Padrão do ImobFlow: verde sóbrio e natural — solidez, não pressa.
+   Padrão do ImobFlow (tema Lumina): laranja âmbar sobre quase preto.
    --------------------------------------------------------------------- */
 :root {
-  --cor-destaque: oklch(0.505 0.078 158);
-  --cor-destaque-hover: oklch(0.445 0.078 158);
-  --cor-destaque-contraste: oklch(0.99 0.005 158);
-  --cor-destaque-suave: oklch(0.955 0.021 158);
+  --cor-destaque: oklch(0.705 0.187 47);
+  --cor-destaque-hover: oklch(0.646 0.194 41);
+  /* Texto SOBRE o destaque. Escuro, porque laranja claro com texto
+     branco não passa em contraste. */
+  --cor-destaque-contraste: oklch(0.145 0 0);
+  /* Translúcida, e não um tom calculado: sobre fundo escuro é a
+     transparência que lê como "suave", em qualquer matiz. */
+  --cor-destaque-suave: color-mix(in oklab, var(--cor-destaque) 14%, transparent);
 }
 
 /* ---------------------------------------------------------------------
-   1b. BARRA LATERAL DO PAINEL — verde profundo
+   1b. BARRA LATERAL DO PAINEL — preto neutro
    ---------------------------------------------------------------------
-   A sidebar era branca sobre um conteúdo cinza quase branco: 2,8 pontos
-   de luminosidade de diferença, e uma borda de 1px fazendo todo o
-   trabalho de separar as duas regiões. Escurecida, ela passa a se ler
-   como um lugar próprio, e o conteúdo ganha o contraste que faltava.
+   No tema escuro a barra é um degrau acima do fundo (#0a0a0a sobre
+   #050505), separada pela borda. Ela é NEUTRA de propósito: era um
+   verde derivado da marca porque, sobre um painel claro, era a única
+   área escura e precisava carregar a identidade. Aqui o painel inteiro
+   é escuro, e a marca aparece no marcador e no ícone do item ativo.
 
-   TODOS os valores derivam de --cor-destaque, e isso é o ponto: a barra
-   é a maior área de cor do painel, e escrita como um verde absoluto ela
-   ficaria para trás na primeira imobiliária de marca vermelha. Trocando
-   as quatro linhas do bloco acima, a barra acompanha sozinha.
+   O que precisava sobreviver continua valendo: nenhum valor é uma cor
+   de marca escrita à mão. Neutro não briga com nenhuma --cor-destaque,
+   e o marcador deriva dela.
 
-   As transparências (hover, item ativo, bordas) são brancas de
-   propósito: funcionam sobre qualquer matiz que --cor-destaque venha a
-   ter, sem precisar de um valor calculado por cor.
+   As transparências (hover, item ativo, bordas) são brancas, e
+   funcionam sobre qualquer fundo escuro.
    --------------------------------------------------------------------- */
 :root {
-  /* O verde da marca levado ao escuro: mesma matiz, ~40% da luminosidade */
-  --sidebar: color-mix(in oklab, var(--cor-destaque) 60%, black);
+  --sidebar: oklch(0.145 0 0);
 
-  /* Item em repouso e item em foco. O forte é usado no hover, no item
-     ativo e no nome da imobiliária. */
-  --sidebar-texto: color-mix(in oklab, var(--cor-destaque-contraste) 80%, var(--sidebar));
-  --sidebar-texto-forte: var(--cor-destaque-contraste);
+  --sidebar-texto: oklch(0.708 0 0);
+  --sidebar-texto-forte: oklch(0.985 0 0);
   /* Rótulo de grupo: presente o bastante para orientar, apagado o
      bastante para não competir com os itens que ele encima. */
-  --sidebar-rotulo: color-mix(in oklab, var(--cor-destaque-contraste) 55%, var(--sidebar));
+  --sidebar-rotulo: oklch(0.45 0 0);
 
-  --sidebar-hover: oklch(1 0 0 / 0.07);
-  --sidebar-ativo: oklch(1 0 0 / 0.13);
-  --sidebar-borda: oklch(1 0 0 / 0.1);
+  --sidebar-hover: oklch(1 0 0 / 0.05);
+  --sidebar-ativo: oklch(1 0 0 / 0.08);
+  --sidebar-borda: oklch(1 0 0 / 0.06);
 
-  /* Marcador vertical do item ativo. Sobre fundo escuro, quem distingue
-     o item selecionado é a luminosidade, não a matiz. */
-  --sidebar-marcador: color-mix(in oklab, var(--cor-destaque) 42%, white);
+  /* Marcador vertical do item ativo: a própria cor da marca, que sobre
+     preto já tem luminosidade de sobra para se destacar. */
+  --sidebar-marcador: var(--cor-destaque);
 }
 
 /* ---------------------------------------------------------------------
-   2. NEUTROS — cinzas QUENTES (matiz 75), nunca azulados
+   2. NEUTROS — escala neutra sobre quase preto
+   ---------------------------------------------------------------------
+   Três degraus de superfície, do mais fundo ao mais alto: fundo da
+   página, cartão, e a alternativa (hover, faixas da vitrine, campos).
+   Bordas são branco translúcido, e não cinza sólido, para lerem igual
+   sobre qualquer um dos três degraus.
    --------------------------------------------------------------------- */
 :root {
-  /* Fundo da área de conteúdo do painel: cinza claro quente */
-  --fundo: oklch(0.972 0.0025 75);
-  /* Cartões e superfícies elevadas: branco */
-  --superficie: oklch(1 0 0);
-  --superficie-alternativa: oklch(0.985 0.002 75);
+  color-scheme: dark;
 
-  /* Texto: cinza bem escuro, próximo do preto — nunca preto puro */
-  --texto: oklch(0.235 0.006 75);
-  --texto-suave: oklch(0.545 0.009 75);
-  --texto-tenue: oklch(0.665 0.008 75);
+  --fundo: oklch(0.1 0 0);
+  --superficie: oklch(0.16 0 0);
+  --superficie-alternativa: oklch(0.2 0 0);
 
-  /* Bordas e divisores discretos */
-  --borda: oklch(0.917 0.0035 75);
-  --borda-forte: oklch(0.868 0.004 75);
+  /* Texto: quase branco, nunca branco puro */
+  --texto: oklch(0.97 0.001 106);
+  --texto-suave: oklch(0.708 0 0);
+  --texto-tenue: oklch(0.556 0 0);
 
-  /* Semânticas */
-  --destrutivo: oklch(0.548 0.196 27);
-  --destrutivo-contraste: oklch(0.99 0.005 27);
-  --sucesso: oklch(0.55 0.11 155);
-  --alerta: oklch(0.68 0.14 75);
+  --borda: oklch(1 0 0 / 0.08);
+  --borda-forte: oklch(1 0 0 / 0.15);
+
+  /* Semânticas, mais claras que no tema claro para lerem sobre preto */
+  --destrutivo: oklch(0.637 0.237 25);
+  --destrutivo-contraste: oklch(0.985 0 0);
+  --sucesso: oklch(0.765 0.177 163);
+  --alerta: oklch(0.828 0.189 84);
+
+  /* Dois valores que NÃO acompanham o tema, e existem por isso.
+     `escuro` é o véu sobre foto e atrás de modal; `claro` é o texto
+     sobre foto. Antes esse papel era de --texto e --superficie, que
+     no tema claro eram quase preto e branco. No escuro eles se
+     inverteram, e o véu de modal virou névoa branca. */
+  --escuro: oklch(0.1 0 0);
+  --claro: oklch(0.985 0 0);
 
   /* Formas: cantos generosos */
   --raio: 0.75rem;
@@ -109,14 +121,16 @@
    mudam junto. Ver REPLICACAO.md, seção "Os sete status são do funil de
    imobiliária".
    --------------------------------------------------------------------- */
+/* Luminosidade em torno de 0.72: sobre preto, as cores do tema claro
+   (0.55) somem no badge translúcido. As matizes são as mesmas. */
 :root {
-  --status-novo: oklch(0.585 0.015 75);
-  --status-conversando: oklch(0.565 0.115 245);
-  --status-agendou: oklch(0.545 0.135 295);
-  --status-visitou: oklch(0.545 0.115 155);
-  --status-cancelou: oklch(0.575 0.165 27);
-  --status-follow-up-1: oklch(0.675 0.125 70);
-  --status-follow-up-2: oklch(0.5 0.085 60);
+  --status-novo: oklch(0.72 0.012 75);
+  --status-conversando: oklch(0.72 0.13 245);
+  --status-agendou: oklch(0.72 0.15 295);
+  --status-visitou: oklch(0.74 0.15 155);
+  --status-cancelou: oklch(0.7 0.17 25);
+  --status-follow-up-1: oklch(0.8 0.14 75);
+  --status-follow-up-2: oklch(0.66 0.1 60);
 }
 
 /* ---------------------------------------------------------------------
@@ -155,6 +169,10 @@
   --color-sucesso: var(--sucesso);
   --color-alerta: var(--alerta);
 
+  /* Fixos, independentes do tema — gera bg-escuro/80, text-claro, etc. */
+  --color-escuro: var(--escuro);
+  --color-claro: var(--claro);
+
   /* Funil de leads — gera bg-status-novo, text-status-agendou, etc. */
   --color-status-novo: var(--status-novo);
   --color-status-conversando: var(--status-conversando);
@@ -178,10 +196,14 @@
     'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
 
-  /* Sombras suaves e discretas, nunca pesadas */
-  --shadow-cartao: 0 1px 2px oklch(0.235 0.006 75 / 0.04), 0 1px 3px oklch(0.235 0.006 75 / 0.05);
-  --shadow-elevado: 0 4px 12px oklch(0.235 0.006 75 / 0.07), 0 2px 4px oklch(0.235 0.006 75 / 0.04);
-  --shadow-sobreposto: 0 12px 32px oklch(0.235 0.006 75 / 0.13);
+  /* Sobre preto a sombra quase não aparece. Quem dá relevo é o fio de
+     luz no topo (inset), como no vidro do Lumina. */
+  --shadow-cartao: inset 0 1px 0 oklch(1 0 0 / 0.04), 0 1px 2px oklch(0 0 0 / 0.4);
+  --shadow-elevado: inset 0 1px 0 oklch(1 0 0 / 0.06), 0 8px 24px oklch(0 0 0 / 0.5);
+  --shadow-sobreposto: inset 0 1px 0 oklch(1 0 0 / 0.06), 0 20px 48px oklch(0 0 0 / 0.6);
+  /* Brilho da marca, para o botão principal da vitrine */
+  --shadow-brilho: 0 0 25px color-mix(in oklab, var(--cor-destaque) 30%, transparent),
+    0 8px 40px color-mix(in oklab, var(--cor-destaque) 15%, transparent);
 }
 
 /* ---------------------------------------------------------------------
@@ -219,7 +241,7 @@
   }
 
   ::selection {
-    background-color: var(--cor-destaque-suave);
+    background-color: color-mix(in oklab, var(--cor-destaque) 30%, transparent);
     color: var(--texto);
   }
 }
@@ -268,12 +290,15 @@
     color: var(--texto-suave);
   }
 
-  /* --- Site público --- */
+  /* --- Site público ---
+     Títulos do Lumina: peso médio e espaçamento bem apertado. O tamanho
+     faz a hierarquia, e o peso 700 sobre preto pesaria demais. */
   .titulo-vitrine {
-    font-size: clamp(2rem, 1.35rem + 2.6vw, 3.25rem);
-    line-height: 1.08;
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+    line-height: 0.98;
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
     color: var(--texto);
   }
 
@@ -288,10 +313,11 @@
      hierarquia é por peso, porque densidade importa; aqui é por
      tamanho, porque o que importa é a foto respirar em volta. */
   .titulo-secao-vitrine {
-    font-size: clamp(1.625rem, 1.35rem + 1.1vw, 2.25rem);
-    line-height: 1.15;
-    font-weight: 700;
-    letter-spacing: -0.025em;
+    font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+    line-height: 1.05;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
     color: var(--texto);
   }
 
@@ -316,12 +342,91 @@
     padding-block: clamp(3.5rem, 2.5rem + 4vw, 6rem);
   }
 
-  /* Cartão padrão do painel: branco sobre o fundo cinza claro */
+  /* Cartão padrão do painel: um degrau acima do fundo, com o fio de luz
+     no topo que o Lumina usa nos vidros */
   .cartao {
     background-color: var(--superficie);
     border: 1px solid var(--borda);
     border-radius: var(--raio);
     box-shadow: var(--shadow-cartao);
+  }
+
+  /* Vidro fosco: para o que flutua sobre foto ou sobre os feixes. Não
+     usar em cartão comum do painel, onde o fundo é liso e o desfoque
+     só custaria desempenho. */
+  .vidro {
+    background-image: linear-gradient(180deg, oklch(1 0 0 / 0.06), oklch(1 0 0 / 0.02));
+    border: 1px solid oklch(1 0 0 / 0.08);
+    backdrop-filter: blur(12px);
+  }
+
+  /* Rótulo de seção da vitrine: ponto da marca + texto em caixa alta */
+  .sobretitulo-vitrine {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--cor-destaque) 85%, transparent);
+  }
+
+  .sobretitulo-vitrine::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background-color: var(--cor-destaque);
+  }
+
+  /* ------------------------------------------------------------------
+     Feixes: a grade vertical com luz caindo, assinatura do Lumina.
+
+     Feito só em CSS, sem a aura em WebGL do original. A vitrine abre
+     quase sempre no celular, vindo de um link de WhatsApp, e um runtime
+     de WebGL no carregamento é o tipo de custo que ninguém mede até o
+     site parecer lento.
+
+     Uso: um elemento com `.feixes` absoluto atrás do conteúdo. As
+     linhas são o fundo; os dois feixes são ::before e ::after.
+     ------------------------------------------------------------------ */
+  .feixes {
+    pointer-events: none;
+    background-image: linear-gradient(to right, oklch(1 0 0 / 0.05) 1px, transparent 1px);
+    background-size: 25% 100%;
+    overflow: hidden;
+  }
+
+  .feixes::before,
+  .feixes::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 16rem;
+    background-image: linear-gradient(to bottom, transparent, var(--cor-destaque), transparent);
+    opacity: 0.7;
+    animation: feixe-cair 7s linear infinite;
+  }
+
+  .feixes::before {
+    left: 25%;
+  }
+
+  .feixes::after {
+    left: 50%;
+    height: 24rem;
+    animation-delay: 2.5s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feixes::before,
+    .feixes::after {
+      animation: none;
+      opacity: 0;
+    }
   }
 
   /* ------------------------------------------------------------------
@@ -334,6 +439,20 @@
      ------------------------------------------------------------------ */
   .lead-recem-movido {
     animation: lead-pulso 2.4s ease-out;
+  }
+}
+
+@keyframes feixe-cair {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(120vh);
+    opacity: 0;
   }
 }
 

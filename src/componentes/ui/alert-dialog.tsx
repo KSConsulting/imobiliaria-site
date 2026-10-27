@@ -13,7 +13,7 @@ function AlertDialogOverlay({
   return (
     <AlertDialogPrimitive.Overlay
       className={cn(
-        'fixed inset-0 z-50 bg-texto/35 backdrop-blur-[2px]',
+        'fixed inset-0 z-50 bg-escuro/70 backdrop-blur-sm',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
         className,

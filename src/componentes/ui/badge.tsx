@@ -10,7 +10,7 @@ const variantesBadge = cva(
         destaque: 'bg-destaque text-destaque-contraste',
         suave: 'bg-destaque-suave text-destaque',
         neutro: 'bg-superficie-alternativa text-texto-suave border border-borda',
-        escuro: 'bg-texto/85 text-superficie backdrop-blur-sm',
+        escuro: 'bg-escuro/80 text-claro backdrop-blur-sm',
         alerta: 'bg-alerta/15 text-alerta',
         inativo: 'bg-texto-suave text-superficie',
       },

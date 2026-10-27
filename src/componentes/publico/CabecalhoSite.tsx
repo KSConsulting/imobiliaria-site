@@ -41,7 +41,7 @@ export function CabecalhoSite() {
   }, [pathname, hash])
 
   return (
-    <header className="sticky top-0 z-40 border-b border-borda/70 bg-superficie/85 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-borda bg-fundo/75 backdrop-blur-xl">
       {/* A barra fica mais alta no desktop para caber a logo maior sem
           espremê-la contra a borda. No celular a altura antiga vale, que
           é onde cada pixel de altura tira conteúdo da primeira dobra. */}
@@ -52,7 +52,7 @@ export function CabecalhoSite() {
             <img
               src={configuracoes.logo_url}
               alt={nomeNegocio}
-              className="size-10 shrink-0 rounded-lg object-contain md:size-14"
+              className="size-10 shrink-0 rounded-lg bg-claro object-contain p-1 md:size-14"
             />
           ) : (
             <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-destaque md:size-14">

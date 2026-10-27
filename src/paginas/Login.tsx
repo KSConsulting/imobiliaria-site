@@ -8,7 +8,6 @@ import {
   Eye,
   EyeOff,
   Globe,
-  KeyRound,
   Loader2,
 } from 'lucide-react'
 import { usarAutenticacao } from '@/contextos/ContextoAutenticacao'
@@ -112,11 +111,11 @@ export function Login() {
   return (
     <div className="grid min-h-dvh lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
       {/* ---------------- Coluna do formulário ---------------- */}
-      <div className="flex items-center justify-center bg-superficie px-6 py-14 sm:px-10">
+      <div className="flex items-center justify-center bg-fundo px-6 py-14 sm:px-10">
         <div className="w-full max-w-sm">
           <div className="mb-9 flex flex-col items-start gap-4">
             {logo ? (
-              <img src={logo} alt={nome ?? ''} className="h-11 max-w-[13rem] object-contain" />
+              <img src={logo} alt={nome ?? ''} className="h-11 max-w-[13rem] rounded-lg bg-claro object-contain p-1.5" />
             ) : (
               <div className="flex size-12 items-center justify-center rounded-xl bg-destaque">
                 <Building2 className="size-6 text-destaque-contraste" strokeWidth={1.9} />
@@ -124,7 +123,7 @@ export function Login() {
             )}
 
             <div className="flex flex-col gap-1.5">
-              <h1 className="text-2xl font-semibold tracking-tight text-texto">
+              <h1 className="text-3xl font-medium tracking-tighter text-texto">
                 Acesse o painel
               </h1>
               {carregandoConfig ? (
@@ -214,20 +213,21 @@ export function Login() {
 
           As trilhas de `grid-cols` acompanham: a mais larga (1.1fr) é a
           primeira, porque a mais larga é esta coluna. */}
-      <div className="relative hidden overflow-hidden bg-destaque lg:order-first lg:block">
+      <div className="relative hidden overflow-hidden border-r border-borda bg-superficie lg:order-first lg:block">
         <div
           aria-hidden
-          className="absolute inset-0 opacity-[0.13]"
+          className="absolute inset-0"
           style={{
             backgroundImage:
-              'radial-gradient(circle at 78% 18%, white 0, transparent 42%), radial-gradient(circle at 18% 78%, white 0, transparent 46%)',
+              'radial-gradient(ellipse at 20% 30%, color-mix(in oklab, var(--cor-destaque) 24%, transparent), transparent 60%)',
           }}
         />
+        <div aria-hidden className="feixes absolute inset-0" />
         {/* Malha de planta baixa, discreta o bastante para não competir
             com os cartões que ficam por cima. */}
         <div
           aria-hidden
-          className="absolute inset-0 opacity-[0.06]"
+          className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage:
               'linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)',
@@ -244,8 +244,7 @@ export function Login() {
         />
 
         <div className="relative flex h-full flex-col justify-between gap-10 p-14">
-          <div className="flex items-center gap-2.5 text-destaque-contraste/70">
-            <KeyRound className="size-4" strokeWidth={1.9} />
+          <div className="sobretitulo-vitrine">
             <span className="text-xs font-medium uppercase tracking-[0.16em]">
               Painel de gestão
             </span>
@@ -255,13 +254,13 @@ export function Login() {
             {AREAS.map(({ icone: Icone, titulo, apoio }) => (
               <li
                 key={titulo}
-                className="rounded-xl border border-white/12 bg-white/8 p-4 backdrop-blur-[2px]"
+                className="vidro rounded-xl p-4"
               >
-                <span className="flex size-9 items-center justify-center rounded-lg bg-white/12 text-destaque-contraste">
+                <span className="flex size-9 items-center justify-center rounded-lg bg-destaque-suave text-destaque">
                   <Icone className="size-5" strokeWidth={1.8} />
                 </span>
-                <p className="mt-3 text-sm font-medium text-destaque-contraste">{titulo}</p>
-                <p className="mt-1 text-xs leading-relaxed text-destaque-contraste/65">
+                <p className="mt-3 text-sm font-medium text-texto">{titulo}</p>
+                <p className="mt-1 text-xs leading-relaxed text-texto-suave">
                   {apoio}
                 </p>
               </li>
@@ -270,13 +269,13 @@ export function Login() {
 
           <div>
             {carregandoConfig ? (
-              <Skeleton className="h-10 w-72 bg-white/20" />
+              <Skeleton className="h-10 w-72 bg-superficie-alternativa" />
             ) : (
-              <p className="max-w-lg text-4xl font-semibold leading-tight tracking-tight text-destaque-contraste">
+              <p className="max-w-lg text-5xl font-medium leading-[0.95] tracking-tighter text-texto">
                 {nomeNegocio}
               </p>
             )}
-            <p className="mt-4 max-w-md text-base leading-relaxed text-destaque-contraste/75">
+            <p className="mt-5 max-w-md text-base font-medium leading-relaxed text-texto-suave">
               Sua carteira de imóveis, a agenda dos corretores e o funil de atendimento no
               mesmo lugar. A vitrine fica sempre em dia, sem publicação manual.
             </p>

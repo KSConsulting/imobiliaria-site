@@ -56,7 +56,7 @@ export function CartaoImovelPublico({ imovel, prioritaria = false }: Props) {
           {badges.map((finalidade) => (
             <span
               key={finalidade}
-              className="rounded-full bg-texto/85 px-2.5 py-1 text-xs font-semibold text-superficie backdrop-blur-sm"
+              className="rounded-full bg-escuro/85 px-2.5 py-1 text-xs font-semibold text-claro backdrop-blur-sm"
             >
               {ROTULOS_FINALIDADE_VITRINE[finalidade]}
             </span>

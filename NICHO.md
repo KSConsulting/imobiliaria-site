@@ -61,28 +61,25 @@ Todo o sistema de design vive em **`src/index.css`**. A cor de destaque está no
 ```css
 /* src/index.css */
 :root {
-  --cor-destaque: oklch(0.505 0.078 158);           /* a cor da marca */
-  --cor-destaque-hover: oklch(0.445 0.078 158);     /* ~12% mais escura */
-  --cor-destaque-contraste: oklch(0.99 0.005 158);  /* texto sobre a cor */
-  --cor-destaque-suave: oklch(0.955 0.021 158);     /* fundo do item ativo */
+  --cor-destaque: oklch(0.705 0.187 47);            /* a cor da marca */
+  --cor-destaque-hover: oklch(0.646 0.194 41);      /* um pouco mais escura */
+  --cor-destaque-contraste: oklch(0.145 0 0);       /* texto SOBRE a cor */
+  --cor-destaque-suave: color-mix(in oklab, var(--cor-destaque) 14%, transparent);
 }
 ```
 
-Trocar essas quatro linhas muda de uma vez: botões, links, item ativo da sidebar, anel de foco dos campos, coluna visual do login, **o fundo da barra lateral do painel** e destaques da vitrine. **Nas duas áreas ao mesmo tempo.**
+Trocar essas linhas muda de uma vez: botões, links, item ativo da sidebar, anel de foco dos campos, o brilho da coluna visual do login, os feixes e os destaques da vitrine. **Nas duas áreas ao mesmo tempo.** A `--cor-destaque-suave` se ajusta sozinha, porque é a própria cor com transparência.
 
-A barra lateral merece uma nota, porque é a maior área de cor do sistema e ninguém a escreve à mão. Ela é escura, e o valor sai de um cálculo sobre a cor de destaque, no bloco `1b` do mesmo arquivo:
+O sistema é escuro (tema Lumina). Isso pede duas atenções na troca:
 
-```css
---sidebar: color-mix(in oklab, var(--cor-destaque) 60%, black);
-```
+- **A cor da marca precisa ter luz** sobre preto: luminosidade entre 0,62 e 0,80 no primeiro número do `oklch`. Uma marca escura, como azul-marinho ou vinho, deve ser clareada para virar destaque; a versão escura dela some sobre o fundo
+- **`--cor-destaque-contraste` é o texto sobre a cor.** Ele é escuro porque o laranja é claro. Se a marca clareada ainda pedir texto branco (um azul médio, por exemplo), troque por `oklch(0.985 0 0)`
 
-Ou seja: o verde da marca a cerca de 40% da luminosidade. **Marca vermelha gera barra vinho, marca azul gera barra azul-noite, sem tocar em mais nada.**
+A barra lateral **não** deriva da marca: é um preto neutro, e a marca aparece no marcador e no ícone do item ativo. Não há nada a ajustar nela.
 
-> ⚠️ O cálculo assume uma cor de marca de luminosidade média, entre 0,45 e 0,60 no primeiro número do `oklch`, que é o caso da esmagadora maioria das marcas. Se a imobiliária tiver uma cor **muito clara** (amarelo, laranja claro, verde-limão), a barra sai clara demais e o rótulo de grupo perde legibilidade. A correção é uma: baixe os `60%` para algo entre `40%` e `45%`. Confira olhando os rótulos "VISÃO GERAL" e "ATENDIMENTO", que são o texto menor da barra e os primeiros a sumir.
+Os valores são **oklch**, no formato `oklch(luminosidade croma matiz)`. Exemplos de matiz: azul ≈ 250, terracota ≈ 40, vinho ≈ 15, verde-água ≈ 190, verde ≈ 155.
 
-Os valores são **oklch**, no formato `oklch(luminosidade croma matiz)`. Para trocar mantendo a harmonia, mude o terceiro número (a matiz) nas quatro linhas e ajuste o croma na mesma proporção. Exemplos de matiz: azul ≈ 250, terracota ≈ 40, vinho ≈ 15, verde-água ≈ 190.
-
-Os neutros ficam logo abaixo, no bloco seguinte do mesmo arquivo. São cinzas **quentes** (matiz 75) e é raro precisar mexer neles — a paleta base é neutra de propósito, para servir a qualquer imobiliária.
+Os neutros ficam logo abaixo, no bloco seguinte do mesmo arquivo. É uma escala neutra sobre quase preto, e é raro precisar mexer nela.
 
 **Não sobrescreva cor componente a componente.** É assim que a identidade se perde: seis meses depois, metade do sistema ignora a variável e a troca deixa de funcionar.
 
@@ -309,7 +306,7 @@ O bloco no topo da aba vai listar o que falta. Ele é o roteiro desta seção: q
 
 ### Identidade visual — no código
 
-13. **Aplicar a cor da marca** — as quatro linhas de `--cor-destaque` em `src/index.css` (ver seção 3)
+13. **Aplicar a cor da marca** — as linhas de `--cor-destaque` em `src/index.css`, conferindo o contraste do texto sobre ela (ver seção 3)
 14. **Trocar a fonte**, se a marca exigir — `src/index.css` + `index.html`
 
 ### Vocabulário — `Configurações → Tipos de imóvel`

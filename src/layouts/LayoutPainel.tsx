@@ -39,11 +39,11 @@ export function LayoutPainel() {
     <TooltipProvider delayDuration={200}>
       <div className="min-h-dvh bg-fundo">
         {/* Sidebar fixa — desktop */}
-        {/* Sem borda à direita: a barra é escura e já se separa do
-            conteúdo sozinha. Uma borda clara ali só marcaria a emenda. */}
+        {/* Com borda à direita: no tema escuro a barra é só um degrau
+            acima do conteúdo, e é a borda que marca onde um termina. */}
         <aside
           className={cn(
-            'fixed inset-y-0 left-0 z-40 hidden transition-[width] duration-200 lg:block',
+            'fixed inset-y-0 left-0 z-40 hidden border-r border-sidebar-borda transition-[width] duration-200 lg:block',
             compacta ? 'w-[4.5rem]' : 'w-64',
           )}
         >

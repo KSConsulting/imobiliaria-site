@@ -372,31 +372,54 @@ Todos os valores de cor, tipografia e forma vivem em **`src/index.css`**. Nenhum
 
 ### Cor de destaque — ponto único de troca
 
-A variável `--cor-destaque` no topo de `src/index.css` é o único lugar a mudar para trocar a identidade em uma nova imobiliária. Ela alimenta botões, links, item ativo da sidebar, foco de campo, coluna visual do login, o fundo da barra lateral do painel e destaques da vitrine. As três derivadas (`--cor-destaque-hover`, `--cor-destaque-contraste`, `--cor-destaque-suave`) acompanham, mantendo a mesma matiz.
+A variável `--cor-destaque` no topo de `src/index.css` é o único lugar a mudar para trocar a identidade em uma nova imobiliária. Ela alimenta botões, links, item ativo da sidebar, foco de campo, brilho da coluna visual do login, os feixes e destaques da vitrine. `--cor-destaque-hover` acompanha a matiz; `--cor-destaque-suave` é a própria cor a 14% de opacidade, e por isso nem precisa ser ajustada na troca; `--cor-destaque-contraste` é o texto **sobre** o destaque, e hoje é escuro.
 
-Padrão do ImobFlow: verde sóbrio e natural — solidez, não pressa.
+Padrão do ImobFlow: o tema **Lumina** — laranja âmbar sobre quase preto. A referência visual é o design system Lumina.
 
-### A barra lateral é escura, e a cor dela é calculada
+### Tema escuro de ponta a ponta
 
-O bloco `1b` de `src/index.css` traz os tokens `--sidebar-*`. O fundo é `color-mix(in oklab, var(--cor-destaque) 60%, black)`, ou seja, o verde da marca levado a cerca de 40% da luminosidade original.
+As duas áreas e o login são escuras, com `color-scheme: dark` no `:root`, para que campos nativos, barras de rolagem e o seletor de data acompanhem. Não existe alternância para claro: o sistema tem um tema só.
 
-**Antes ela era branca**, `--superficie`, sobre um conteúdo em `--fundo`, cinza quase branco. São 2,8 pontos de luminosidade de diferença: quem separava as duas regiões era uma borda de 1px, e o painel inteiro lia como uma superfície só.
+**O texto sobre o destaque é escuro, e não branco.** Laranja tem luminosidade alta, e texto branco sobre ele não passa em contraste. Uma imobiliária cuja marca peça texto branco precisa inverter `--cor-destaque-contraste`: é a única linha do bloco que não se ajusta sozinha.
 
-**Nenhum valor da barra é escrito à mão, e essa é a decisão que precisa sobreviver.** A sidebar é a maior área de cor do sistema. Escrita como um verde absoluto, ela seria a única parte do painel que ignoraria a troca de identidade, e a primeira imobiliária de marca vermelha teria botões vermelhos ao lado de uma barra verde. Derivada, ela acompanha as quatro linhas do bloco `1` sozinha.
+### A barra lateral é neutra
 
-Pelo mesmo motivo, o hover, o item ativo e as bordas internas são **branco com transparência**, não cores calculadas: transparência funciona sobre qualquer matiz que `--cor-destaque` venha a ter.
+O bloco `1b` de `src/index.css` traz os tokens `--sidebar-*`. O fundo é um preto neutro um degrau acima do conteúdo, separado por uma borda à direita no `LayoutPainel`.
 
-Três consequências que não são a cor de fundo e quebram se ninguém olhar:
+**Ela já foi derivada da marca**, um verde escurecido por `color-mix`. Fazia sentido quando o painel era claro e a barra era a única área escura, e portanto a maior área de cor do sistema. Com o painel inteiro escuro, a barra deixou de carregar a identidade: a marca aparece no **marcador** e no **ícone** do item ativo, que usam `--cor-destaque`.
 
-- **O item ativo distingue por luminosidade, não por matiz.** Sobre verde escuro, o antigo `bg-destaque-suave` com texto verde virava um borrão. Hoje é branco a 13% com texto claro, e o marcador lateral é um verde clareado
-- **A logo fica sobre um quadrado branco.** Boa parte das logos chega em PNG transparente com o traço escuro, e solta no fundo escuro ela desaparece. O erro só apareceria na implantação de um cliente
-- **O anel de foco dentro da barra é claro**, pela regra `[data-sidebar] :focus-visible`. O anel verde padrão cairia sobre o próprio verde e sumiria, justo para quem navega por teclado
+**O que precisa sobreviver é o mesmo de antes: nenhuma cor de marca escrita à mão.** Neutro não briga com nenhuma `--cor-destaque`, e o que é de marca deriva dela.
+
+O hover, o item ativo e as bordas internas são **branco com transparência**, que funciona sobre qualquer fundo escuro.
+
+Duas consequências que quebram se ninguém olhar:
+
+- **A logo fica sobre um quadrado claro (`bg-claro`)**: na sidebar, no cabeçalho e no rodapé da vitrine e no login. Boa parte das logos chega em PNG ou SVG transparente com o traço escuro, e solta no fundo escuro ela desaparece. O erro só apareceria na implantação de um cliente
+- **O anel de foco dentro da barra é claro**, pela regra `[data-sidebar] :focus-visible`
 
 O `Sheet` do mobile monta o mesmo componente `Sidebar`, então herda tudo sem código próprio.
 
 ### Paleta base
 
-Neutra e profissional, para servir a qualquer imobiliária. Cinzas **quentes**, nunca azulados: fundos em branco e cinza claro, texto em cinza bem escuro próximo do preto mas nunca preto puro, bordas discretas. O painel é claro; a barra lateral é a única área escura do sistema, e é o que dá o contraste entre navegação e conteúdo.
+Escala **neutra** sobre quase preto, em três degraus: `--fundo` (a página), `--superficie` (cartão) e `--superficie-alternativa` (hover, campos). Texto quase branco, nunca branco puro. **Bordas são branco translúcido**, não cinza sólido, para lerem igual sobre os três degraus.
+
+Sobre preto a sombra quase não aparece. Quem dá relevo ao cartão é o fio de luz no topo, uma sombra `inset` branca a 4%, como no vidro do Lumina.
+
+### `escuro` e `claro` não acompanham o tema
+
+Dois tokens fixos, `--escuro` e `--claro`, para o que precisa ser preto ou branco **independentemente do tema**: o véu atrás de modal e sobre foto (`bg-escuro/70`) e o texto sobre foto (`text-claro`).
+
+Esse papel era de `--texto` e `--superficie`, que no tema claro eram quase preto e quase branco. Na troca para o escuro eles se inverteram, e o véu dos modais virou uma névoa branca. **Código novo que precise de preto ou branco literal usa estes dois**, e nunca `texto` ou `superficie` com opacidade.
+
+A exceção consciente é a inversão: o tooltip e o chip selecionado do filtro de corretores usam `bg-texto text-superficie` de propósito, porque ali o que se quer é o oposto do fundo, seja ele qual for.
+
+### Feixes e vidro, só em CSS
+
+`.feixes` desenha a grade vertical com luz caindo, e `.vidro` o cartão fosco que flutua sobre foto. Os dois estão em `src/index.css`.
+
+O Lumina original usa uma aura em WebGL (Unicorn Studio) e carrega o Tailwind por CDN. **Nenhum dos dois entrou.** A vitrine abre quase sempre no celular, vindo de um link de WhatsApp, e um runtime de WebGL na primeira carga é o tipo de custo que ninguém mede até o site parecer lento. Os feixes respeitam `prefers-reduced-motion`.
+
+`.vidro` é para o que flutua sobre foto ou sobre os feixes. Em cartão comum do painel, sobre fundo liso, o desfoque só custaria desempenho: lá é `.cartao`.
 
 ### Cores do funil
 
@@ -408,7 +431,9 @@ As classes ficam escritas por extenso em `ETAPAS_FUNIL`, em `src/lib/leads.ts`. 
 
 ### Tipografia
 
-Uma família só, sem serifa, com boa variação de peso — **Inter**, declarada em `--font-sans` no bloco `@theme` de `src/index.css` e carregada no `index.html`.
+Uma família só, sem serifa, com boa variação de peso — **Inter**, declarada em `--font-sans` no bloco `@theme` de `src/index.css` e carregada no `index.html`, com os pesos de 300 a 700.
+
+Os títulos da vitrine seguem o Lumina: **peso 500 e espaçamento bem apertado** (`-0.045em`), com o tamanho fazendo a hierarquia. Peso 700 sobre preto pesaria demais. Os números grandes, como os da faixa da home, são peso 300.
 
 ### Formas
 
@@ -416,14 +441,14 @@ Cantos arredondados generosos (`--raio`, 0.75rem), sombras suaves e discretas, e
 
 ### Direção visual das duas áreas
 
-- **Painel** — ferramenta de trabalho. Prioriza densidade de informação: sidebar fixa e escura, conteúdo em cards brancos sobre fundo cinza claro, tabelas com boa quantidade de linhas por tela. Sóbrio e funcional, sem decoração. Classes `.titulo-pagina`, `.titulo-secao`, `.rotulo-grupo`, `.texto-apoio`, `.cartao`
-- **Site público** — vitrine. Prioriza impacto visual: mais aberto, mais respirado, foto como elemento dominante, escala tipográfica maior e mais contraste entre título e corpo. Mesma família e mesma cor de destaque, para coerência de marca. Classes `.titulo-vitrine`, `.subtitulo-vitrine`, `.titulo-secao-vitrine`, `.container-vitrine`, `.secao-vitrine`
+- **Painel** — ferramenta de trabalho. Prioriza densidade de informação: sidebar fixa, conteúdo em cartões um degrau acima do fundo quase preto, tabelas com boa quantidade de linhas por tela. Sem feixes nem vidro: o Lumina entra ali pela paleta, não pelos efeitos. Sóbrio e funcional, sem decoração. Classes `.titulo-pagina`, `.titulo-secao`, `.rotulo-grupo`, `.texto-apoio`, `.cartao`
+- **Site público** — vitrine. Prioriza impacto visual: mais aberto, mais respirado, foto como elemento dominante, escala tipográfica maior e mais contraste entre título e corpo. Mesma família e mesma cor de destaque, para coerência de marca. No hero, a foto entra em luminosidade e a 45%, com os feixes e o brilho da marca por cima. Classes `.titulo-vitrine`, `.subtitulo-vitrine`, `.titulo-secao-vitrine`, `.sobretitulo-vitrine`, `.container-vitrine`, `.secao-vitrine`, `.vidro`, `.feixes`
 
 A vitrine é construída **a partir da tela pequena**. O acesso chega majoritariamente por link de WhatsApp, aberto no celular: no mobile os filtros secundários começam recolhidos, a galeria vira carrossel deslizável e o botão de WhatsApp fica fixo na base da página do imóvel, ao alcance do polegar.
 
 ### A coluna visual do login repete a sidebar
 
-O login é a única tela que não pertence a nenhuma das duas áreas: é a porta do painel, mas quem a vê ainda não entrou. A coluna verde à esquerda traz quatro cartões com ícones do ramo, e cada um **nomeia uma área que existe de verdade na sidebar** — carteira de imóveis, agenda de visitas, funil de atendimento e vitrine sempre no ar.
+O login é a única tela que não pertence a nenhuma das duas áreas: é a porta do painel, mas quem a vê ainda não entrou. A coluna escura à esquerda, com o brilho da marca e os feixes, traz quatro cartões com ícones do ramo, e cada um **nomeia uma área que existe de verdade na sidebar** — carteira de imóveis, agenda de visitas, funil de atendimento e vitrine sempre no ar.
 
 Isso é uma escolha de conteúdo, não de decoração: é a primeira tela de toda implantação, e quem abre pela primeira vez descobre ali o que o sistema faz sem precisar entrar. Ícone genérico de tecnologia ocuparia o mesmo espaço sem dizer nada.
 

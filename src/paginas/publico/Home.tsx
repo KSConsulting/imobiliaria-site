@@ -179,18 +179,25 @@ export function Home() {
               // Primeira imagem da dobra: carrega imediatamente, sem
               // lazy. Ela é o próprio conteúdo da primeira tela.
               fetchPriority="high"
-              className="absolute inset-0 -z-20 size-full object-cover"
+              // Em luminosidade e a 45%: a foto vira textura sob o texto,
+              // como no Lumina, e qualquer foto de fachada, de qualquer
+              // cor, assenta no mesmo preto.
+              className="absolute inset-0 -z-20 size-full object-cover opacity-45 mix-blend-luminosity"
             />
-            {/* Véu escuro: sem ele, o texto branco fica ilegível sobre
-                foto clara, e a foto de fachada costuma ser clara. */}
+            {/* Véu: escurece o topo, sob o cabeçalho, e funde a base no
+                fundo da página, para o hero não terminar numa linha reta. */}
             <div
-              className="absolute inset-0 -z-10 bg-gradient-to-t from-texto/85 via-texto/55 to-texto/35"
+              className="absolute inset-0 -z-10 bg-gradient-to-b from-fundo/90 via-fundo/55 to-fundo"
               aria-hidden
             />
           </>
-        ) : (
-          <div className="absolute inset-0 -z-10 bg-destaque" aria-hidden />
-        )}
+        ) : null}
+        {/* Brilho da marca e feixes, com ou sem foto */}
+        <div
+          className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_25%_30%,color-mix(in_oklab,var(--cor-destaque)_20%,transparent),transparent_60%)]"
+          aria-hidden
+        />
+        <div className="feixes absolute inset-0 -z-10 mx-auto max-w-7xl" aria-hidden />
 
         <div className="container-vitrine pb-10 pt-28 sm:pb-14">
           {/* Chips de tipo.
@@ -206,7 +213,7 @@ export function Home() {
                 <Link
                   key={tipo.id}
                   to={`/?tipo=${tipo.id}#imoveis`}
-                  className="rounded-full border border-superficie/35 bg-superficie/12 px-4 py-1.5 text-sm font-medium text-superficie backdrop-blur-sm transition-colors hover:bg-superficie/25"
+                  className="rounded-full border border-claro/35 bg-claro/12 px-4 py-1.5 text-sm font-medium text-claro backdrop-blur-sm transition-colors hover:bg-claro/25"
                 >
                   {tipo.nome}
                 </Link>
@@ -214,8 +221,8 @@ export function Home() {
             </div>
           )}
 
-          <h1 className="titulo-vitrine max-w-3xl text-superficie">{HERO.titulo}</h1>
-          <p className="subtitulo-vitrine mt-5 max-w-xl text-superficie/85">{HERO.subtitulo}</p>
+          <h1 className="titulo-vitrine max-w-4xl text-claro">{HERO.titulo}</h1>
+          <p className="subtitulo-vitrine mt-6 max-w-xl font-medium text-claro/60">{HERO.subtitulo}</p>
 
           <div className="mt-9 max-w-4xl">
             <BuscaHero tipos={tipos} cidades={locais.cidades} bairros={locais.bairros} />
@@ -225,7 +232,7 @@ export function Home() {
 
       {/* ================= Números reais ================= */}
       {resumo && resumo.imoveis > 0 && (
-        <section className="border-b border-borda bg-superficie-alternativa">
+        <section className="border-y border-borda bg-fundo">
           <div className="container-vitrine grid grid-cols-2 gap-6 py-9 sm:grid-cols-4">
             <Numero valor={resumo.imoveis} rotulo={resumo.imoveis === 1 ? 'imóvel disponível' : 'imóveis disponíveis'} />
             {resumo.paraVenda > 0 && <Numero valor={resumo.paraVenda} rotulo="à venda" />}
@@ -401,18 +408,25 @@ export function Home() {
       <section className="relative isolate overflow-hidden">
         {fotoHero ? (
           <>
-            <img src={fotoHero} alt="" loading="lazy" className="absolute inset-0 -z-20 size-full object-cover" />
-            <div className="absolute inset-0 -z-10 bg-texto/80" aria-hidden />
+            <img
+              src={fotoHero}
+              alt=""
+              loading="lazy"
+              className="absolute inset-0 -z-20 size-full object-cover opacity-40 mix-blend-luminosity"
+            />
+            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-fundo via-fundo/60 to-fundo" aria-hidden />
           </>
-        ) : (
-          <div className="absolute inset-0 -z-10 bg-destaque" aria-hidden />
-        )}
+        ) : null}
+        <div
+          className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--cor-destaque)_18%,transparent),transparent_65%)]"
+          aria-hidden
+        />
 
         <div className="container-vitrine secao-vitrine text-center">
-          <h2 className="titulo-secao-vitrine mx-auto max-w-2xl text-superficie">
+          <h2 className="titulo-secao-vitrine mx-auto max-w-2xl text-claro">
             {CHAMADA_FINAL.titulo}
           </h2>
-          <p className="subtitulo-vitrine mx-auto mt-4 max-w-xl text-superficie/85">
+          <p className="subtitulo-vitrine mx-auto mt-4 max-w-xl text-claro/60">
             {CHAMADA_FINAL.texto}
           </p>
           <div className="mt-9 flex justify-center">
@@ -470,9 +484,11 @@ function BotaoCategoria({
 
 function Numero({ valor, rotulo }: { valor: number; rotulo: string }) {
   return (
-    <div className="flex flex-col gap-1">
-      <span className="text-3xl font-bold tracking-tight text-destaque tabular-nums">{valor}</span>
-      <span className="text-sm text-texto-suave">{rotulo}</span>
+    <div className="flex flex-col gap-2">
+      <span className="text-5xl font-light leading-none tracking-tighter text-texto tabular-nums sm:text-6xl">
+        {valor}
+      </span>
+      <span className="text-sm font-medium text-texto-tenue">{rotulo}</span>
     </div>
   )
 }

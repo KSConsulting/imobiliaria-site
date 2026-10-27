@@ -21,16 +21,15 @@ import { cn } from '@/lib/utils'
 const LIMITE_INICIAL = 10
 const LIMITE_EXPANDIDO = 30
 
-/** Cores da rosca de tipos. Mesma matiz do destaque, luminosidade variando. */
-const CORES_TIPOS = [
-  'oklch(0.505 0.078 158)',
-  'oklch(0.575 0.075 168)',
-  'oklch(0.645 0.07 178)',
-  'oklch(0.705 0.062 188)',
-  'oklch(0.765 0.052 198)',
-  'oklch(0.815 0.042 208)',
-  'oklch(0.86 0.032 218)',
-]
+/**
+ * Cores da rosca de tipos: o destaque, cada vez mais misturado ao cinza.
+ * Derivadas da variável e não escritas como valor, para acompanharem a
+ * troca de --cor-destaque. Escritas à mão, eram o último verde que
+ * sobrava no painel depois da troca para o laranja.
+ */
+const CORES_TIPOS = [100, 82, 66, 52, 40, 30, 22].map(
+  (pct) => `color-mix(in oklab, var(--cor-destaque) ${pct}%, var(--texto-tenue))`,
+)
 
 export function AbaSite({ periodo }: { periodo: Periodo }) {
   return (

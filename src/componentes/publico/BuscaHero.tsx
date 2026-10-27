@@ -60,7 +60,7 @@ export function BuscaHero({ tipos, cidades, bairros }: Props) {
         e.preventDefault()
         buscar()
       }}
-      className="rounded-2xl border border-borda/60 bg-superficie/95 p-4 shadow-sobreposto backdrop-blur-md sm:p-5"
+      className="vidro rounded-2xl p-4 shadow-sobreposto sm:p-5"
     >
       {/* Finalidade — primeiro nível de navegação */}
       <div

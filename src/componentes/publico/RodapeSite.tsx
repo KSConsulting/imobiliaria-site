@@ -43,7 +43,7 @@ export function RodapeSite() {
   const naHome = useLocation().pathname === '/'
 
   return (
-    <footer id="contato" className="mt-auto border-t border-borda bg-superficie-alternativa">
+    <footer id="contato" className="mt-auto border-t border-borda bg-fundo">
       <div className="container-vitrine py-14">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {/* Marca */}
@@ -53,7 +53,7 @@ export function RodapeSite() {
                 <img
                   src={configuracoes.logo_url}
                   alt={nomeNegocio}
-                  className="size-11 rounded-lg object-contain"
+                  className="size-11 rounded-lg bg-claro object-contain p-1"
                 />
               ) : (
                 <span className="flex size-11 items-center justify-center rounded-lg bg-destaque">

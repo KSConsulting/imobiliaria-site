@@ -117,7 +117,7 @@ export function GaleriaImovel({ fotos, titulo }: Props) {
             type="button"
             onClick={() => setAmpliada(true)}
             aria-label="Ver em tela cheia"
-            className="absolute right-4 top-4 flex size-10 cursor-pointer items-center justify-center rounded-full bg-texto/60 text-superficie opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100"
+            className="absolute right-4 top-4 flex size-10 cursor-pointer items-center justify-center rounded-full bg-escuro/60 text-claro opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100"
           >
             <Expand className="size-4" />
           </button>
@@ -126,7 +126,7 @@ export function GaleriaImovel({ fotos, titulo }: Props) {
             <>
               <SetaGaleria direcao="anterior" aoClicar={anterior} />
               <SetaGaleria direcao="proxima" aoClicar={proxima} />
-              <span className="absolute bottom-4 right-4 rounded-full bg-texto/60 px-3 py-1 text-xs font-medium text-superficie backdrop-blur-sm">
+              <span className="absolute bottom-4 right-4 rounded-full bg-escuro/60 px-3 py-1 text-xs font-medium text-claro backdrop-blur-sm">
                 {atual + 1} / {total}
               </span>
             </>
@@ -164,20 +164,20 @@ export function GaleriaImovel({ fotos, titulo }: Props) {
       {/* ---------------- Tela cheia ---------------- */}
       {ampliada && (
         <div
-          className="fixed inset-0 z-50 flex flex-col bg-texto/95 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex flex-col bg-escuro/95 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-label={`Fotos de ${titulo}`}
         >
           <div className="flex shrink-0 items-center justify-between p-4">
-            <span className="text-sm font-medium text-superficie/80">
+            <span className="text-sm font-medium text-claro/80">
               {atual + 1} de {total}
             </span>
             <button
               type="button"
               onClick={() => setAmpliada(false)}
               aria-label="Fechar"
-              className="flex size-11 cursor-pointer items-center justify-center rounded-full text-superficie transition-colors hover:bg-superficie/15"
+              className="flex size-11 cursor-pointer items-center justify-center rounded-full text-claro transition-colors hover:bg-claro/15"
             >
               <X className="size-5" />
             </button>
@@ -226,8 +226,8 @@ function SetaGaleria({
         'absolute top-1/2 flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full backdrop-blur-sm transition-colors',
         direcao === 'anterior' ? 'left-4' : 'right-4',
         clara
-          ? 'bg-superficie/15 text-superficie hover:bg-superficie/28'
-          : 'bg-texto/55 text-superficie hover:bg-texto/75',
+          ? 'bg-claro/15 text-claro hover:bg-claro/28'
+          : 'bg-escuro/55 text-claro hover:bg-escuro/75',
       )}
     >
       <Icone className="size-5" />

@@ -274,11 +274,11 @@ export function GerenciadorFotos({ fotos, aoMudar }: Props) {
                 </Badge>
               )}
 
-              <span className="absolute right-2 top-2 rounded-md bg-texto/70 p-1 text-superficie opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
+              <span className="absolute right-2 top-2 rounded-md bg-escuro/70 p-1 text-claro opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
                 <GripVertical className="size-3.5" />
               </span>
 
-              <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-1 bg-linear-to-t from-texto/80 to-transparent p-2 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
+              <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-1 bg-linear-to-t from-escuro/80 to-transparent p-2 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
                 <button
                   type="button"
                   onClick={() => definirCapa(foto.chave)}
