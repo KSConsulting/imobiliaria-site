@@ -17,7 +17,7 @@
    de uma vez só. As outras três derivam dela e devem ser ajustadas
    junto, mantendo a mesma matiz (o terceiro número do oklch).
 
-   Padrão do ImobFlow (tema Lumina): laranja âmbar sobre quase preto.
+   Padrão do ImobFlow (tema Lumina): laranja âmbar sobre grafite.
    --------------------------------------------------------------------- */
 :root {
   --cor-destaque: oklch(0.705 0.187 47);
@@ -33,8 +33,8 @@
 /* ---------------------------------------------------------------------
    1b. BARRA LATERAL DO PAINEL — preto neutro
    ---------------------------------------------------------------------
-   No tema escuro a barra é um degrau acima do fundo (#0a0a0a sobre
-   #050505), separada pela borda. Ela é NEUTRA de propósito: era um
+   No tema escuro a barra é um degrau acima do fundo (grafite 0.215 sobre
+   0.185), separada pela borda. Ela é NEUTRA de propósito: era um
    verde derivado da marca porque, sobre um painel claro, era a única
    área escura e precisava carregar a identidade. Aqui o painel inteiro
    é escuro, e a marca aparece no marcador e no ícone do item ativo.
@@ -47,7 +47,7 @@
    funcionam sobre qualquer fundo escuro.
    --------------------------------------------------------------------- */
 :root {
-  --sidebar: oklch(0.145 0 0);
+  --sidebar: oklch(0.215 0 0);
 
   --sidebar-texto: oklch(0.708 0 0);
   --sidebar-texto-forte: oklch(0.985 0 0);
@@ -65,7 +65,7 @@
 }
 
 /* ---------------------------------------------------------------------
-   2. NEUTROS — escala neutra sobre quase preto
+   2. NEUTROS — escala neutra sobre grafite
    ---------------------------------------------------------------------
    Três degraus de superfície, do mais fundo ao mais alto: fundo da
    página, cartão, e a alternativa (hover, faixas da vitrine, campos).
@@ -75,16 +75,16 @@
 :root {
   color-scheme: dark;
 
-  --fundo: oklch(0.1 0 0);
-  --superficie: oklch(0.16 0 0);
-  --superficie-alternativa: oklch(0.2 0 0);
+  --fundo: oklch(0.185 0 0);
+  --superficie: oklch(0.235 0 0);
+  --superficie-alternativa: oklch(0.275 0 0);
 
   /* Texto: quase branco, nunca branco puro */
   --texto: oklch(0.97 0.001 106);
   --texto-suave: oklch(0.708 0 0);
-  --texto-tenue: oklch(0.556 0 0);
+  --texto-tenue: oklch(0.62 0 0);
 
-  --borda: oklch(1 0 0 / 0.08);
+  --borda: oklch(1 0 0 / 0.1);
   --borda-forte: oklch(1 0 0 / 0.15);
 
   /* Semânticas, mais claras que no tema claro para lerem sobre preto */

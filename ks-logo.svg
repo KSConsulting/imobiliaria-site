@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="165 165 650 650" width="650" height="650" role="img" aria-label="KS Consulting">
+  <title>KS Consulting</title>
+  <style>
+    .g, .d { stroke: #4a4a4e; fill: none; }
+    .r { stroke: #e00800; fill: none; }
+    .f { fill: #e00800; }
+    .d { stroke-dasharray: 1 1; animation: draw var(--u) cubic-bezier(.65,0,.35,1) var(--t) both; }
+    .p { transform-box: fill-box; transform-origin: center; animation: pop 420ms cubic-bezier(.2,.8,.2,1) var(--t) both; }
+    .ring { fill: none; stroke: #e00800; stroke-width: 2; transform-box: fill-box; transform-origin: center; opacity: 0; }
+    .hit { animation: hit 700ms cubic-bezier(.2,.7,.3,1) 1670ms; }
+    .pulse { animation: pulse 2.4s ease-out 5.6s infinite; }
+    @keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+    @keyframes pop { 0% { opacity: 0; transform: scale(.3); } 70% { opacity: 1; transform: scale(1.15); } 100% { opacity: 1; transform: scale(1); } }
+    @keyframes hit { from { opacity: .85; transform: scale(.1); } to { opacity: 0; transform: scale(1.6); } }
+    @keyframes pulse { from { opacity: .8; transform: scale(1); } to { opacity: 0; transform: scale(3.2); } }
+    @media (prefers-reduced-motion: reduce) {
+      .d, .p { animation: none; }
+      .ring, .live { display: none; }
+    }
+  </style>
+  <defs>
+    <filter id="glow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- K: parede engastada -->
+  <line class="d" style="--t:0ms;--u:700ms" x1="221" y1="678" x2="221" y2="212" stroke-width="9" stroke-linecap="round" pathLength="1"/>
+  <g>
+    <line class="d" style="--t:900ms;--u:260ms" x1="186" y1="256" x2="217" y2="239" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:860ms;--u:260ms" x1="186" y1="283.5" x2="217" y2="266.5" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:820ms;--u:260ms" x1="186" y1="311" x2="217" y2="294" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:780ms;--u:260ms" x1="186" y1="338.5" x2="217" y2="321.5" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:740ms;--u:260ms" x1="186" y1="366" x2="217" y2="349" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:700ms;--u:260ms" x1="186" y1="393.5" x2="217" y2="376.5" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:660ms;--u:260ms" x1="186" y1="421" x2="217" y2="404" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:620ms;--u:260ms" x1="186" y1="448.5" x2="217" y2="431.5" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:580ms;--u:260ms" x1="186" y1="476" x2="217" y2="459" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:540ms;--u:260ms" x1="186" y1="503.5" x2="217" y2="486.5" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:500ms;--u:260ms" x1="186" y1="531" x2="217" y2="514" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:460ms;--u:260ms" x1="186" y1="558.5" x2="217" y2="541.5" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:420ms;--u:260ms" x1="186" y1="586" x2="217" y2="569" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:380ms;--u:260ms" x1="186" y1="613.5" x2="217" y2="596.5" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:340ms;--u:260ms" x1="186" y1="641" x2="217" y2="624" stroke-width="7" pathLength="1"/>
+    <line class="d" style="--t:300ms;--u:260ms" x1="186" y1="668.5" x2="217" y2="651.5" stroke-width="7" pathLength="1"/>
+  </g>
+
+  <!-- K: lei da reflexao (theta_i = theta_r = 52 graus) -->
+  <line class="d r" style="--t:1150ms;--u:520ms" x1="409.7" y1="207.6" x2="225" y2="444" stroke-width="8" stroke-linecap="round" pathLength="1"/>
+  <line class="d r" style="--t:1670ms;--u:520ms" x1="225" y1="444" x2="409.7" y2="680.4" stroke-width="8" stroke-linecap="round" pathLength="1"/>
+  <g>
+    <path class="d r" style="--t:1380ms;--u:260ms" d="M391 262.6 L354.3 278.5 L360.8 239" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+    <path class="d r" style="--t:1540ms;--u:260ms" d="M320.8 352.5 L284.1 368.4 L290.6 328.9" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+    <path class="d r" style="--t:1900ms;--u:260ms" d="M310.9 522.7 L317.4 562.2 L280.7 546.3" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+    <path class="d r" style="--t:2120ms;--u:260ms" d="M384.7 617.3 L391.2 656.8 L354.5 640.9" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+  </g>
+  <circle class="ring hit" cx="225" cy="444" r="44"/>
+
+  <!-- S: senoide escrita pelas tres notacoes da derivada -->
+  <path class="d" style="--t:2300ms;--u:460ms" d="M787 368 A182 182 0 0 0 640 209" stroke-width="8" pathLength="1"/>
+  <!-- Lagrange: f' -->
+  <path class="d r" style="--t:2700ms;--u:380ms" d="M619 184 C603 187 595 197 607 206 C621 215 630 223 614 236" stroke-width="7" stroke-linecap="round" pathLength="1"/>
+  <path class="d" style="--t:2780ms;--u:460ms" d="M584 207 A182 182 0 0 0 426 364" stroke-width="8" pathLength="1"/>
+  <path class="d" style="--t:3240ms;--u:240ms" d="M426 364 L572 419" stroke-width="8" pathLength="1"/>
+  <!-- Leibniz: df/dx -->
+  <g class="p r" style="--t:3420ms" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="597" cy="419" rx="7" ry="9"/><path d="M604 401 V428"/>
+    <path d="M631 404 C627 400 619 401 619 408 V428 M612 413 H628"/>
+    <path d="M582 441 H642"/>
+    <ellipse cx="597" cy="463" rx="7" ry="9"/><path d="M604 445 V472"/>
+    <path d="M614 454 L630 472 M630 454 L614 472"/>
+  </g>
+  <path class="d" style="--t:3500ms;--u:240ms" d="M657 451 L787 500" stroke-width="8" pathLength="1"/>
+  <path class="d" style="--t:3740ms;--u:460ms" d="M787 500 A182 182 0 0 1 640 663" stroke-width="8" pathLength="1"/>
+  <!-- Newton: ponto (fluxao) -->
+  <circle class="f p" style="--t:4140ms" cx="612" cy="661" r="14"/>
+  <circle class="ring pulse" cx="612" cy="661" r="14"/>
+  <path class="d" style="--t:4200ms;--u:460ms" d="M584 665 A182 182 0 0 1 425 500" stroke-width="8" pathLength="1"/>
+
+  <!-- CONSULTING -->
+  <g>
+    <path class="d" style="--t:4500ms;--u:700ms" d="M277.4 749.3 A24 26 0 1 0 277.4 782.7" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+    <path class="d" style="--t:4590ms;--u:700ms" d="M291 766 A25 26 0 1 0 341 766 A25 26 0 1 0 291 766" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+    <path class="d" style="--t:4680ms;--u:700ms" d="M354 792 V740 L390 792 V740" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+    <path class="d" style="--t:4770ms;--u:700ms" d="M437 747 C432 741 425 740 420 740 C410 740 403 745 403 752 C403 760 410 763 420 766 C431 769 438 772 438 780 C438 787 431 792 420 792 C411 792 404 789 401 783" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+    <path class="d" style="--t:4860ms;--u:700ms" d="M450 740 V775 C450 786 458 792 468.5 792 C479 792 487 786 487 775 V740" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+    <path class="d" style="--t:4950ms;--u:700ms" d="M499 740 V792 H532" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+    <path class="d" style="--t:5040ms;--u:700ms" d="M544 740 H585 M564.5 740 V792" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+    <path class="d" style="--t:5130ms;--u:700ms" d="M598 740 V792" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+    <path class="d" style="--t:5220ms;--u:700ms" d="M611 792 V740 L648 792 V740" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+    <path class="d" style="--t:5310ms;--u:700ms" d="M700.6 749.3 A23 26 0 1 0 701.8 780.9 V767 H684" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+  </g>
+
+  <!-- Foton percorrendo o raio, em loop -->
+  <g class="live">
+    <circle cx="225" cy="444" r="6" fill="none" stroke="#e00800" stroke-width="2" opacity="0">
+      <animate attributeName="r" values="6;6;6;64;64" keyTimes="0;0.399;0.4;0.65;1" dur="2.6s" begin="5.6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0;0.85;0;0" keyTimes="0;0.399;0.4;0.65;1" dur="2.6s" begin="5.6s" repeatCount="indefinite"/>
+    </circle>
+    <circle class="f" r="9" filter="url(#glow)" opacity="0">
+      <animateMotion path="M409.7 207.6 L225 444 L409.7 680.4" dur="2.6s" begin="5.6s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.8;1" calcMode="linear"/>
+      <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.06;0.74;0.8;1" dur="2.6s" begin="5.6s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>

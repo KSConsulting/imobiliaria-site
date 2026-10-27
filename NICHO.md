@@ -79,7 +79,7 @@ A barra lateral **não** deriva da marca: é um preto neutro, e a marca aparece 
 
 Os valores são **oklch**, no formato `oklch(luminosidade croma matiz)`. Exemplos de matiz: azul ≈ 250, terracota ≈ 40, vinho ≈ 15, verde-água ≈ 190, verde ≈ 155.
 
-Os neutros ficam logo abaixo, no bloco seguinte do mesmo arquivo. É uma escala neutra sobre quase preto, e é raro precisar mexer nela.
+Os neutros ficam logo abaixo, no bloco seguinte do mesmo arquivo. É uma escala neutra sobre grafite, e é raro precisar mexer nela.
 
 **Não sobrescreva cor componente a componente.** É assim que a identidade se perde: seis meses depois, metade do sistema ignora a variável e a troca deixa de funcionar.
 

@@ -182,12 +182,12 @@ export function Home() {
               // Em luminosidade e a 45%: a foto vira textura sob o texto,
               // como no Lumina, e qualquer foto de fachada, de qualquer
               // cor, assenta no mesmo preto.
-              className="absolute inset-0 -z-20 size-full object-cover opacity-45 mix-blend-luminosity"
+              className="absolute inset-0 -z-20 size-full object-cover opacity-75 mix-blend-luminosity"
             />
             {/* Véu: escurece o topo, sob o cabeçalho, e funde a base no
                 fundo da página, para o hero não terminar numa linha reta. */}
             <div
-              className="absolute inset-0 -z-10 bg-gradient-to-b from-fundo/90 via-fundo/55 to-fundo"
+              className="absolute inset-0 -z-10 bg-gradient-to-b from-fundo/70 via-fundo/25 to-fundo"
               aria-hidden
             />
           </>
@@ -412,9 +412,9 @@ export function Home() {
               src={fotoHero}
               alt=""
               loading="lazy"
-              className="absolute inset-0 -z-20 size-full object-cover opacity-40 mix-blend-luminosity"
+              className="absolute inset-0 -z-20 size-full object-cover opacity-65 mix-blend-luminosity"
             />
-            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-fundo via-fundo/60 to-fundo" aria-hidden />
+            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-fundo via-fundo/35 to-fundo" aria-hidden />
           </>
         ) : null}
         <div

@@ -374,7 +374,7 @@ Todos os valores de cor, tipografia e forma vivem em **`src/index.css`**. Nenhum
 
 A variável `--cor-destaque` no topo de `src/index.css` é o único lugar a mudar para trocar a identidade em uma nova imobiliária. Ela alimenta botões, links, item ativo da sidebar, foco de campo, brilho da coluna visual do login, os feixes e destaques da vitrine. `--cor-destaque-hover` acompanha a matiz; `--cor-destaque-suave` é a própria cor a 14% de opacidade, e por isso nem precisa ser ajustada na troca; `--cor-destaque-contraste` é o texto **sobre** o destaque, e hoje é escuro.
 
-Padrão do ImobFlow: o tema **Lumina** — laranja âmbar sobre quase preto. A referência visual é o design system Lumina.
+Padrão do ImobFlow: o tema **Lumina** — laranja âmbar sobre grafite. A referência visual é o design system Lumina.
 
 ### Tema escuro de ponta a ponta
 
@@ -401,9 +401,11 @@ O `Sheet` do mobile monta o mesmo componente `Sidebar`, então herda tudo sem c�
 
 ### Paleta base
 
-Escala **neutra** sobre quase preto, em três degraus: `--fundo` (a página), `--superficie` (cartão) e `--superficie-alternativa` (hover, campos). Texto quase branco, nunca branco puro. **Bordas são branco translúcido**, não cinza sólido, para lerem igual sobre os três degraus.
+Escala **neutra** sobre grafite, em três degraus: `--fundo` (a página), `--superficie` (cartão) e `--superficie-alternativa` (hover, campos). Texto quase branco, nunca branco puro. **Bordas são branco translúcido**, não cinza sólido, para lerem igual sobre os três degraus.
 
-Sobre preto a sombra quase não aparece. Quem dá relevo ao cartão é o fio de luz no topo, uma sombra `inset` branca a 4%, como no vidro do Lumina.
+O fundo é **grafite** (`oklch(0.185 0 0)`), e não o quase preto `#050505` do Lumina original. Sobre preto, a foto do hero e os feixes ficavam apagados; um tom acima deixa a imagem de fundo aparecer, e o véu sobre ela também ficou mais leve.
+
+Sobre fundo escuro a sombra quase não aparece. Quem dá relevo ao cartão é o fio de luz no topo, uma sombra `inset` branca a 4%, como no vidro do Lumina.
 
 ### `escuro` e `claro` não acompanham o tema
 
@@ -441,7 +443,7 @@ Cantos arredondados generosos (`--raio`, 0.75rem), sombras suaves e discretas, e
 
 ### Direção visual das duas áreas
 
-- **Painel** — ferramenta de trabalho. Prioriza densidade de informação: sidebar fixa, conteúdo em cartões um degrau acima do fundo quase preto, tabelas com boa quantidade de linhas por tela. Sem feixes nem vidro: o Lumina entra ali pela paleta, não pelos efeitos. Sóbrio e funcional, sem decoração. Classes `.titulo-pagina`, `.titulo-secao`, `.rotulo-grupo`, `.texto-apoio`, `.cartao`
+- **Painel** — ferramenta de trabalho. Prioriza densidade de informação: sidebar fixa, conteúdo em cartões um degrau acima do fundo grafite, tabelas com boa quantidade de linhas por tela. Sem feixes nem vidro: o Lumina entra ali pela paleta, não pelos efeitos. Sóbrio e funcional, sem decoração. Classes `.titulo-pagina`, `.titulo-secao`, `.rotulo-grupo`, `.texto-apoio`, `.cartao`
 - **Site público** — vitrine. Prioriza impacto visual: mais aberto, mais respirado, foto como elemento dominante, escala tipográfica maior e mais contraste entre título e corpo. Mesma família e mesma cor de destaque, para coerência de marca. No hero, a foto entra em luminosidade e a 45%, com os feixes e o brilho da marca por cima. Classes `.titulo-vitrine`, `.subtitulo-vitrine`, `.titulo-secao-vitrine`, `.sobretitulo-vitrine`, `.container-vitrine`, `.secao-vitrine`, `.vidro`, `.feixes`
 
 A vitrine é construída **a partir da tela pequena**. O acesso chega majoritariamente por link de WhatsApp, aberto no celular: no mobile os filtros secundários começam recolhidos, a galeria vira carrossel deslizável e o botão de WhatsApp fica fixo na base da página do imóvel, ao alcance do polegar.
