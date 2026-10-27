@@ -212,7 +212,7 @@ IMV-0002: …"
     caminhoExemplo: '/imoveis/inativos',
     titulo: 'Listar imóveis inativos',
     proposito:
-      'Uso interno de sistemas externos — sincronizar um portal, por exemplo. Não use no atendimento: são imóveis fora do anúncio.',
+      'Uso interno de sistemas externos, como sincronizar um portal, por exemplo. Não use no atendimento: são imóveis fora do anúncio.',
     parametros: [
       { nome: 'limite', tipo: 'número', obrigatorio: false, descricao: 'Padrão 5, máximo 20.' },
       { nome: 'pagina', tipo: 'número', obrigatorio: false, descricao: 'Começa em 0.' },
@@ -231,7 +231,7 @@ IMV-0002: …"
     caminhoExemplo: '/agenda/disponibilidade',
     titulo: 'Consultar disponibilidade',
     proposito:
-      'Responde as duas perguntas da conversa real. Com data e hora: "dá pra quinta às 15h?". Só com data: "o que você tem na quinta?". Não recebe corretor — a API consolida sozinha.',
+      'Responde as duas perguntas da conversa real. Com data e hora: "dá pra quinta às 15h?". Só com data: "o que você tem na quinta?". Não recebe corretor: a API consolida sozinha.',
     parametros: [
       { nome: 'data', tipo: 'AAAA-MM-DD', obrigatorio: true, descricao: 'O dia consultado.' },
       { nome: 'hora', tipo: 'HH:MM', obrigatorio: false, descricao: 'Com hora, responde sim ou não. Sem hora, lista opções.' },
@@ -255,7 +255,7 @@ IMV-0002: …"
     caminhoExemplo: '/agenda/agendar',
     titulo: 'Criar visita',
     proposito:
-      'Marca a visita. Cria o lead pelo WhatsApp se ele ainda não existir — não faz sentido recusar um agendamento por falta de cadastro prévio.',
+      'Marca a visita. Cria o lead pelo WhatsApp se ele ainda não existir, porque não faz sentido recusar um agendamento por falta de cadastro prévio.',
     parametros: [
       { nome: 'whatsapp', tipo: 'texto', obrigatorio: true, descricao: 'Com código do país: 5511971351311. Aceita máscara, e sem o 55 assume Brasil.' },
       { nome: 'data', tipo: 'AAAA-MM-DD', obrigatorio: true, descricao: '' },
@@ -290,7 +290,7 @@ IMV-0002: …"
     caminhoExemplo: '/agenda/reagendar',
     titulo: 'Reagendar visita',
     proposito:
-      'Move a visita. Sempre pelo id — identificar por data seria ambíguo com o lead que tem mais de uma marcada.',
+      'Move a visita. Sempre pelo id: identificar por data seria ambíguo com o lead que tem mais de uma marcada.',
     parametros: [
       { nome: 'id_agendamento', tipo: 'uuid', obrigatorio: true, descricao: 'Obtido em GET /agenda/visitas.' },
       { nome: 'data', tipo: 'AAAA-MM-DD', obrigatorio: true, descricao: '' },

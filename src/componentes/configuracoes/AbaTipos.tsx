@@ -124,7 +124,7 @@ export function AbaTipos() {
     <div className="flex flex-col gap-5">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <p className="texto-apoio max-w-2xl">
-          Esta lista é livre e deve refletir o vocabulário da sua região — "chácara" no interior,
+          Esta lista é livre e deve refletir o vocabulário da sua região: "chácara" no interior,
           "cobertura" na capital, "casa de praia" no litoral. É ela que aparece no cadastro de
           imóveis, nos filtros do site e nos atalhos da home.
         </p>
@@ -231,7 +231,7 @@ export function AbaTipos() {
                   <Button
                     variante="fantasma"
                     tamanho="iconePequeno"
-                    title={tipo.emUso > 0 ? 'Tipo em uso — desative em vez de excluir' : 'Excluir'}
+                    title={tipo.emUso > 0 ? 'Tipo em uso. Desative em vez de excluir' : 'Excluir'}
                     aria-label={`Excluir ${tipo.nome}`}
                     onClick={() => setParaExcluir(tipo)}
                   >

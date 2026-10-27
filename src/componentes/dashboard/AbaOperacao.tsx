@@ -141,7 +141,7 @@ export function AbaOperacao({ periodo }: { periodo: Periodo }) {
         // O funil é estado presente, não recorte de período: um lead que
         // entrou em janeiro e continua em "conversando" é justamente o
         // que precisa aparecer aqui.
-        descricao="Situação atual de todos os leads — não muda com o período. Clique numa etapa para abrir o Funil filtrado."
+        descricao="Situação atual de todos os leads. Não muda com o período. Clique numa etapa para abrir o Funil filtrado."
         icone={Columns3}
         carregando={status.carregando}
         erro={status.erro}

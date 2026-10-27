@@ -192,7 +192,7 @@ export function ModalLead({ aberto, aoFechar, lead, aoSalvar, aoAbrirExistente }
           <DialogDescription>
             {editando
               ? 'Os campos preenchidos pelo agente de IA continuam na ficha do lead.'
-              : 'Só o WhatsApp é obrigatório — o resto pode ser completado depois, inclusive pelo agente.'}
+              : 'Só o WhatsApp é obrigatório. O resto pode ser completado depois, inclusive pelo agente.'}
           </DialogDescription>
         </DialogHeader>
 

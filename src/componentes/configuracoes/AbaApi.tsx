@@ -117,7 +117,7 @@ export function AbaApi({ fuso }: { fuso: string }) {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <p className="texto-apoio max-w-2xl">
           Cada integração que consome a API usa um token próprio. Um por consumidor, porque é
-          isso que permite revogar o do portal sem derrubar o agente de IA junto — e saber, pelos
+          isso que permite revogar o do portal sem derrubar o agente de IA junto, e saber, pelos
           logs, qual dos dois fez o quê.
         </p>
 
@@ -245,7 +245,7 @@ export function AbaApi({ fuso }: { fuso: string }) {
                     {paraAlternar.ativo ? (
                       <>
                         Qualquer integração usando <strong>{paraAlternar.nome}</strong> para de
-                        funcionar <strong>imediatamente</strong> — não há período de tolerância. Se
+                        funcionar <strong>imediatamente</strong>. Não há período de tolerância. Se
                         for o token do agente de IA, o WhatsApp deixa de responder sobre imóveis
                         até alguém trocar o valor na automação.
                         <br />

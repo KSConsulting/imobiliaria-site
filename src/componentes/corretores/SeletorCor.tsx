@@ -31,7 +31,7 @@ export function SeletorCor({ valor, aoMudar, usadas }: Props) {
               type="button"
               disabled={bloqueada}
               onClick={() => aoMudar(cor.hex)}
-              title={bloqueada ? `${cor.nome} — já usada por ${emUso!.porQuem}` : cor.nome}
+              title={bloqueada ? `${cor.nome}, já usada por ${emUso!.porQuem}` : cor.nome}
               aria-label={cor.nome}
               aria-pressed={selecionada}
               className={cn(

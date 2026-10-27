@@ -53,8 +53,11 @@ function Raiz() {
     <ProvedorAutenticacao>
       <ConfiguracoesPorRota>
         <Outlet />
+        {/* `theme="dark"` é obrigatório: o sonner não lê o color-scheme
+            da página, e sem ele o aviso sai branco sobre o tema escuro. */}
         <Toaster
           position="top-right"
+          theme="dark"
           richColors
           closeButton
           toastOptions={{ className: 'font-sans' }}

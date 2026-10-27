@@ -234,7 +234,7 @@ function Estoque() {
       // Estes números são do AGORA e estão na mesma tela que os do
       // período. Sem dizer isso, o dono lê "12 imóveis ativos" como
       // "12 imóveis cadastrados nos últimos 30 dias".
-      descricao="Situação atual da carteira — não muda com o período selecionado."
+      descricao="Situação atual da carteira. Não muda com o período selecionado."
       icone={Boxes}
       carregando={estoque.carregando}
       erro={estoque.erro}

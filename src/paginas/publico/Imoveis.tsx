@@ -177,7 +177,7 @@ export function ImoveisPublico() {
             </h2>
             <p className="mx-auto mt-3 max-w-md text-base leading-relaxed text-texto-suave">
               {temFiltro
-                ? 'Tente ampliar a busca — outro bairro, uma faixa de valor mais larga ou menos quartos. Se preferir, conte para a gente o que procura.'
+                ? 'Tente ampliar a busca: outro bairro, uma faixa de valor mais larga ou menos quartos. Se preferir, conte para a gente o que procura.'
                 : 'Estamos atualizando a carteira. Fale com a gente e conte o que você procura: muitas vezes temos algo antes de publicar.'}
             </p>
 

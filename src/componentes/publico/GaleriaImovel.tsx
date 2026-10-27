@@ -84,7 +84,7 @@ export function GaleriaImovel({ fotos, titulo }: Props) {
             >
               <FotoProgressiva
                 url={foto.url}
-                alt={`${titulo} — foto ${indice + 1}`}
+                alt={`${titulo}, foto ${indice + 1}`}
                 proporcao="4/3"
                 prioritaria={indice === 0}
                 largura={LARGURAS_FOTO.cartao}
@@ -104,7 +104,7 @@ export function GaleriaImovel({ fotos, titulo }: Props) {
         <div className="group relative overflow-hidden rounded-2xl">
           <FotoProgressiva
             url={fotos[atual].url}
-            alt={`${titulo} — foto ${atual + 1}`}
+            alt={`${titulo}, foto ${atual + 1}`}
             proporcao="16/10"
             prioritaria
             largura={LARGURAS_FOTO.principal}
@@ -186,7 +186,7 @@ export function GaleriaImovel({ fotos, titulo }: Props) {
           <div className="relative flex flex-1 items-center justify-center overflow-hidden p-4">
             <img
               src={fotos[atual].url}
-              alt={`${titulo} — foto ${atual + 1}`}
+              alt={`${titulo}, foto ${atual + 1}`}
               className="max-h-full max-w-full object-contain"
             />
 

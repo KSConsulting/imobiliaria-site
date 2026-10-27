@@ -222,7 +222,7 @@ export function ModalVisita({
             />
           </Campo>
 
-          <Campo id="imovel" rotulo="Imóvel" dica="Opcional — pode ser definido depois.">
+          <Campo id="imovel" rotulo="Imóvel" dica="Opcional. Pode ser definido depois.">
             <BuscaImovel selecionado={imovel} aoSelecionar={setImovel} />
           </Campo>
 

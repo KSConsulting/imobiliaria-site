@@ -394,7 +394,7 @@ export function Funil() {
             descricao={
               filtroAtivo
                 ? 'Nenhum contato corresponde à combinação aplicada. Tente afrouxar algum critério.'
-                : 'Os leads aparecem aqui assim que chegarem — o agente de IA cria o contato e o card entra na coluna Novo sem ninguém recarregar a página.'
+                : 'Os leads aparecem aqui assim que chegarem: o agente de IA cria o contato e o card entra na coluna Novo sem ninguém recarregar a página.'
             }
             acao={
               filtroAtivo

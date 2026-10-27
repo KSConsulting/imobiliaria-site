@@ -101,7 +101,7 @@ export function Corretores() {
           <h2 className="titulo-pagina">Corretores</h2>
           <p className="texto-apoio max-w-2xl">
             A equipe que conduz as visitas. Cada corretor tem cor própria na agenda e janela de
-            atendimento independente — é ela que a API oferece ao agente de IA.
+            atendimento independente. É ela que a API oferece ao agente de IA.
           </p>
         </div>
 
@@ -160,7 +160,7 @@ export function Corretores() {
             visitasDoExcluir > 0
               ? `Este corretor tem ${visitasDoExcluir} ${
                   visitasDoExcluir === 1 ? 'visita' : 'visitas'
-                } no histórico. O banco vai recusar a exclusão — visita sem responsável é um compromisso que ninguém sabe de quem era. Use "Desativar" no lugar.`
+                } no histórico. O banco vai recusar a exclusão: visita sem responsável é um compromisso que ninguém sabe de quem era. Use "Desativar" no lugar.`
               : 'A agenda e a janela de atendimento deste corretor serão removidas junto.'
           }
           aoConfirmar={confirmarExclusao}

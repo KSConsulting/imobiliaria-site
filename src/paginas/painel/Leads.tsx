@@ -180,7 +180,7 @@ export function Leads() {
             <EstadoVazio
               icone={Users}
               titulo="Nenhum lead cadastrado"
-              descricao="Os leads chegam sozinhos assim que o agente de IA entrar no ar — ele cria o contato pelo WhatsApp. Enquanto isso, dá para cadastrar à mão quem ligar."
+              descricao="Os leads chegam sozinhos assim que o agente de IA entrar no ar, porque ele cria o contato pelo WhatsApp. Enquanto isso, dá para cadastrar à mão quem ligar."
               acao={{ rotulo: 'Cadastrar primeiro lead', aoClicar: abrirCriacao }}
             />
           )}

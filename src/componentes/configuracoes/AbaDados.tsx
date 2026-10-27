@@ -407,7 +407,7 @@ export function AbaDados({ aoMudarSujo }: { aoMudarSujo: (sujo: boolean) => void
               tiposAceitos={TIPOS_LOGO}
               tamanhoMaximo={TAMANHO_MAXIMO_LOGO}
               ajuste="contido"
-              recomendacao="PNG, JPEG, WEBP ou SVG, até 5 MB. Fundo transparente e proporção horizontal (cerca de 3:1) funcionam melhor — a logo é exibida em faixa, ao lado do nome. Sobe sem recompressão: logo é traço e texto, onde o artefato de compressão aparece."
+              recomendacao="PNG, JPEG, WEBP ou SVG, até 5 MB. Fundo transparente e proporção horizontal (cerca de 3:1) funcionam melhor: a logo é exibida em faixa, ao lado do nome. Sobe sem recompressão: logo é traço e texto, onde o artefato de compressão aparece."
               semImagem="Sem logo, o cabeçalho, o rodapé e a tela de login exibem apenas o nome em texto."
               aoEscolher={(arquivo) => enviarImagem('logo', arquivo)}
               aoRemover={() => definir('logo_url', '')}
@@ -420,7 +420,7 @@ export function AbaDados({ aoMudarSujo }: { aoMudarSujo: (sujo: boolean) => void
             valor={campos.foto_hero_url || null}
             tiposAceitos={TIPOS_HERO}
             ajuste="preenchido"
-            recomendacao="PNG, JPEG ou WEBP. Horizontal e ampla, com o assunto ao centro — o texto da home fica por cima. É reduzida para 1920px e convertida em WEBP antes de subir, então pode enviar a foto do celular como está."
+            recomendacao="PNG, JPEG ou WEBP. Horizontal e ampla, com o assunto ao centro, porque o texto da home fica por cima. É reduzida para 1920px e convertida em WEBP antes de subir, então pode enviar a foto do celular como está."
             semImagem="Sem foto, a primeira dobra do site usa o fundo sólido na cor de destaque."
             aoEscolher={(arquivo) => enviarImagem('hero', arquivo)}
             aoRemover={() => definir('foto_hero_url', '')}
@@ -464,7 +464,7 @@ export function AbaDados({ aoMudarSujo }: { aoMudarSujo: (sujo: boolean) => void
               id="endereco"
               value={campos.endereco}
               onChange={(e) => definir('endereco', e.target.value)}
-              placeholder="Av. Paulista, 1000 — Bela Vista"
+              placeholder="Av. Paulista, 1000, Bela Vista"
             />
           </Campo>
 
@@ -514,7 +514,7 @@ export function AbaDados({ aoMudarSujo }: { aoMudarSujo: (sujo: boolean) => void
               id="whatsapp"
               rotulo="WhatsApp de atendimento"
               erro={erros.whatsapp}
-              dica="É este número que recebe TODOS os cliques do site — o botão de cada imóvel e o do cabeçalho. A mensagem já chega escrita, com o código do imóvel dentro. Vazio, o botão simplesmente não aparece na vitrine."
+              dica="É este número que recebe TODOS os cliques do site: o botão de cada imóvel e o do cabeçalho. A mensagem já chega escrita, com o código do imóvel dentro. Vazio, o botão simplesmente não aparece na vitrine."
             >
               <Input
                 id="whatsapp"
@@ -676,7 +676,7 @@ export function AbaDados({ aoMudarSujo }: { aoMudarSujo: (sujo: boolean) => void
         <Campo
           id="fuso_horario"
           rotulo="Fuso da imobiliária"
-          dica="A agenda, os limites de janela de atendimento e o agrupamento por dia do Dashboard usam este fuso — não o do computador de quem está olhando. Trocar aqui muda como os horários já gravados são exibidos."
+          dica="A agenda, os limites de janela de atendimento e o agrupamento por dia do Dashboard usam este fuso, e não o do computador de quem está olhando. Trocar aqui muda como os horários já gravados são exibidos."
         >
           <Select
             id="fuso_horario"
@@ -694,7 +694,7 @@ export function AbaDados({ aoMudarSujo }: { aoMudarSujo: (sujo: boolean) => void
         {fusoDivergente && (
           <p className="mt-3 rounded-lg border border-alerta/30 bg-alerta/6 px-3.5 py-2.5 text-xs leading-relaxed text-texto-suave">
             Este computador está em <strong>{fusoDoNavegador()}</strong>, diferente do fuso
-            configurado. Não é erro — só significa que os horários exibidos seguem o fuso da
+            configurado. Não é erro. Só significa que os horários exibidos seguem o fuso da
             imobiliária, e não o daqui.
           </p>
         )}

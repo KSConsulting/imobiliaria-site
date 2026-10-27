@@ -104,7 +104,7 @@ export function ModalNovoToken({ aberto, aoFechar, aoCriar }: Props) {
                 <ShieldAlert className="mt-0.5 size-4 shrink-0 text-alerta" />
                 <span>
                   Trate como senha: quem tem este valor fala com a API como se fosse a
-                  imobiliária. Se ele vazar, revogue aqui mesmo — a revogação vale na chamada
+                  imobiliária. Se ele vazar, revogue aqui mesmo: a revogação vale na chamada
                   seguinte, sem esperar nada expirar.
                 </span>
               </p>

@@ -320,7 +320,7 @@ export function Home() {
                 </p>
                 <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-texto-suave">
                   Estamos atualizando a carteira. Fale com a gente no WhatsApp e conte o que você
-                  procura — muitas vezes temos algo antes de publicar.
+                  procura. Muitas vezes temos algo antes de publicar.
                 </p>
                 <div className="mt-7 flex justify-center">
                   <BotaoWhatsapp />

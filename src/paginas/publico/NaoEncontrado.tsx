@@ -29,7 +29,7 @@ export function NaoEncontradoPublico() {
 
         <p className="subtitulo-vitrine mx-auto mt-5 max-w-lg">
           O imóvel que você procura pode ter sido vendido, alugado ou retirado da nossa
-          carteira. Acontece — e links de WhatsApp costumam circular por bastante tempo
+          carteira. Acontece, e links de WhatsApp costumam circular por bastante tempo
           depois disso.
         </p>
 

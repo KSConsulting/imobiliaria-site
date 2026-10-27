@@ -109,7 +109,7 @@ export function Dashboard() {
         <div className="flex flex-col gap-1.5">
           <h2 className="titulo-pagina">Dashboard</h2>
           <p className="texto-apoio">
-            Tudo daqui vem do banco do próprio sistema — sem ferramenta externa de análise.
+            Tudo daqui vem do banco do próprio sistema, sem ferramenta externa de análise.
           </p>
         </div>
 

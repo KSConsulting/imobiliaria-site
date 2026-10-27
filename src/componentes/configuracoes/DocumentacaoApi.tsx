@@ -64,7 +64,7 @@ export function DocumentacaoApi({ tokens }: { tokens: TokenApi[] }) {
           {ativos.length === 0 ? (
             <p className="flex items-start gap-2 rounded-lg border border-alerta/30 bg-alerta/6 px-3.5 py-2.5 text-xs leading-relaxed text-texto-suave">
               <AlertTriangle className="mt-0.5 size-4 shrink-0 text-alerta" />
-              Nenhum token ativo. Crie um acima e ele aparece aqui — os exemplos ficam com{' '}
+              Nenhum token ativo. Crie um acima e ele aparece aqui. Os exemplos ficam com{' '}
               <code className="font-mono">{PLACEHOLDER}</code> até lá.
             </p>
           ) : (
@@ -110,8 +110,8 @@ export function DocumentacaoApi({ tokens }: { tokens: TokenApi[] }) {
           <h4 className="titulo-secao">Códigos de erro</h4>
           <p className="texto-apoio max-w-2xl">
             O campo <code className="font-mono">erro</code> é estável e serve ao switch do N8N. O
-            campo <code className="font-mono">mensagem</code> é o texto em português para o cliente
-            — não compare texto no fluxo, compare o código.
+            campo <code className="font-mono">mensagem</code> é o texto em português para o cliente.
+            Não compare texto no fluxo, compare o código.
           </p>
           <p className="texto-apoio max-w-2xl">
             O status HTTP responde outra pergunta: se a requisição funcionou, não se ela deu o

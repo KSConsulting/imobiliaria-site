@@ -125,7 +125,7 @@ export function AbaLogs({ fuso }: { fuso: string }) {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <p className="texto-apoio max-w-2xl">
           Tudo o que foi feito no sistema, do mais recente para o mais antigo. É onde se descobre
-          quem alterou o valor de um imóvel — e o que havia num imóvel que já foi excluído.
+          quem alterou o valor de um imóvel, e o que havia num imóvel que já foi excluído.
         </p>
 
         <span className="inline-flex items-center gap-1.5 rounded-full border border-borda bg-superficie-alternativa px-3 py-1.5 text-xs font-medium text-texto-suave">

@@ -36,7 +36,7 @@ export function BlocoProntidao({
               : `Faltam ${pendentes.length} itens para publicar o site`}
           </h3>
           <p className="texto-apoio">
-            O site já está no ar e abre normalmente — é essa a parte perigosa. Sem os itens abaixo
+            O site já está no ar e abre normalmente, e é essa a parte perigosa. Sem os itens abaixo
             ele abre <em>e não funciona</em>, e ninguém percebe até um cliente reclamar.
           </p>
 

@@ -154,7 +154,7 @@ export function ImovelPublico() {
 
               <p className="flex items-center gap-2 text-base text-texto-suave">
                 <MapPin className="size-4 shrink-0 text-texto-tenue" />
-                {imovel.bairro}, {imovel.cidade} — {imovel.estado}
+                {imovel.bairro}, {imovel.cidade}, {imovel.estado}
               </p>
             </header>
 
@@ -220,7 +220,7 @@ export function ImovelPublico() {
               <div className="mt-4 flex flex-col gap-3 rounded-2xl border border-borda p-6">
                 <p className="flex items-center gap-2.5 text-base text-texto">
                   <MapPin className="size-4.5 shrink-0 text-destaque" />
-                  {imovel.bairro}, {imovel.cidade} — {imovel.estado}
+                  {imovel.bairro}, {imovel.cidade}, {imovel.estado}
                 </p>
                 <p className="text-sm leading-relaxed text-texto-suave">
                   O endereço completo é informado no atendimento, ao combinar a visita.
@@ -404,5 +404,5 @@ function descricaoParaCompartilhar(imovel: ImovelDetalhe): string {
         ? formatarMoedaCurta(imovel.valor_venda)
         : null
 
-  return [partes.join(' · '), local, valor].filter(Boolean).join(' — ')
+  return [partes.join(' · '), local, valor].filter(Boolean).join(' · ')
 }

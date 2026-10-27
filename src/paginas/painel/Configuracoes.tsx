@@ -196,7 +196,7 @@ function AvisoAlteracoes({
         <AlertDialogHeader>
           <AlertDialogTitle>Você tem alterações não salvas</AlertDialogTitle>
           <AlertDialogDescription>
-            Os dados que você alterou ainda não foram gravados. Se sair agora, eles se perdem — e
+            Os dados que você alterou ainda não foram gravados. Se sair agora, eles se perdem, e
             o site público continua exibindo os valores antigos.
           </AlertDialogDescription>
         </AlertDialogHeader>

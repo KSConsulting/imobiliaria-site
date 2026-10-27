@@ -10,7 +10,7 @@ const ICONES: Record<Destino, LucideIcon> = {
 }
 
 const EXPLICACOES: Record<Destino, string> = {
-  painel: 'Aparece dentro do painel — sidebar, login, título da aba.',
+  painel: 'Aparece dentro do painel: sidebar, login, título da aba.',
   site: 'Aparece no site público, visível para qualquer visitante.',
   api: 'Vai no JSON que o agente de IA e outras integrações consomem.',
 }

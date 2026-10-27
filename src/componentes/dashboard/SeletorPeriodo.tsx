@@ -89,5 +89,5 @@ function formatarIntervalo(periodo: Periodo): string {
   const formatador = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
   // `fim` é exclusivo: o último dia exibido é o anterior a ele.
   const ultimoDia = new Date(periodo.fim.getTime() - 1)
-  return `${formatador.format(periodo.inicio)} — ${formatador.format(ultimoDia)}`
+  return `${formatador.format(periodo.inicio)} a ${formatador.format(ultimoDia)}`
 }

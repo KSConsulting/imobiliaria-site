@@ -459,7 +459,7 @@ export function Agenda() {
           <EstadoVazio
             icone={BadgeCheck}
             titulo="A agenda depende de corretores"
-            descricao="Nenhum corretor cadastrado ainda. Sem equipe não há janela de atendimento, e sem janela não existe horário para oferecer — nem no painel, nem para o agente de IA."
+            descricao="Nenhum corretor cadastrado ainda. Sem equipe não há janela de atendimento, e sem janela não existe horário para oferecer, nem no painel, nem para o agente de IA."
             acao={{
               rotulo: 'Ir para Corretores',
               aoClicar: () => irPara('/painel/corretores'),

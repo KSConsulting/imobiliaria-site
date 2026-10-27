@@ -291,7 +291,7 @@ export function descreverAcao(log: LinhaLog): string {
     // se descobre que faltou cadastrar a frase.
     const legivel = log.acao.replace(/_/g, ' ')
     const frase = legivel.charAt(0).toUpperCase() + legivel.slice(1)
-    return assunto ? `${frase} — ${assunto}` : frase
+    return assunto ? `${frase}: ${assunto}` : frase
   }
 
   return assunto ? descritor.com.replace('%s', assunto) : descritor.sem

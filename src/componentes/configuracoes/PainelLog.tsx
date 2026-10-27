@@ -119,8 +119,8 @@ function Conteudo({
             <FileX2 className="mt-0.5 size-4.5 shrink-0 text-destrutivo" />
             <p className="text-xs leading-relaxed text-texto-suave">
               Este registro não existe mais no banco.{' '}
-              <strong className="text-texto">O que está abaixo é tudo o que restou dele</strong> —
-              a exclusão de imóvel é definitiva e não há para onde voltar atrás.
+              <strong className="text-texto">O que está abaixo é tudo o que restou dele</strong>.
+              A exclusão de imóvel é definitiva e não há para onde voltar atrás.
             </p>
           </div>
         )}
@@ -145,7 +145,7 @@ function Conteudo({
         {visiveis.length === 0 ? (
           <p className="rounded-xl border border-borda bg-superficie-alternativa px-4 py-6 text-center text-sm text-texto-suave">
             {diferencas.length === 0
-              ? 'Esta ação não guardou dados — é o caso de entradas e saídas do sistema.'
+              ? 'Esta ação não guardou dados. É o caso de entradas e saídas do sistema.'
               : 'Nenhum campo mudou de valor nesta gravação.'}
           </p>
         ) : (

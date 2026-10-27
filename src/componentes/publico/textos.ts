@@ -52,7 +52,7 @@ export const PASSOS: Passo[] = [
     icone: MessageCircle,
     titulo: 'Chame no WhatsApp',
     texto:
-      'O botão já envia o código do imóvel junto. Você não precisa explicar qual anúncio viu — a conversa começa no assunto.',
+      'O botão já envia o código do imóvel junto. Você não precisa explicar qual anúncio viu: a conversa começa no assunto.',
   },
   {
     icone: KeyRound,
@@ -90,7 +90,7 @@ export const PERGUNTAS: Pergunta[] = [
   {
     pergunta: 'Quais documentos são necessários para alugar?',
     resposta:
-      'Em geral, documento de identidade, CPF e comprovante de renda, além da forma de garantia escolhida — fiador, seguro-fiança ou caução. Cada imóvel pode ter exigências próprias, e a gente confirma tudo antes de você separar qualquer papel.',
+      'Em geral, documento de identidade, CPF e comprovante de renda, além da forma de garantia escolhida: fiador, seguro-fiança ou caução. Cada imóvel pode ter exigências próprias, e a gente confirma tudo antes de você separar qualquer papel.',
   },
   {
     pergunta: 'E para comprar, como funciona?',
@@ -105,7 +105,7 @@ export const PERGUNTAS: Pergunta[] = [
   {
     pergunta: 'O imóvel que eu vi saiu do site. O que aconteceu?',
     resposta:
-      'Provavelmente foi vendido, alugado ou retirado da carteira. Assim que isso acontece, o anúncio sai do ar — links antigos costumam continuar circulando por um tempo. Chame no WhatsApp que a gente procura alternativas parecidas.',
+      'Provavelmente foi vendido, alugado ou retirado da carteira. Assim que isso acontece, o anúncio sai do ar, mas links antigos costumam continuar circulando por um tempo. Chame no WhatsApp que a gente procura alternativas parecidas.',
   },
 ]
 

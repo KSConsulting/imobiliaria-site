@@ -41,7 +41,7 @@ export function BlocoVisita({
   const titulo = [
     `${formatarHora(new Date(visita.data_hora_inicio), fuso)} às ${formatarHora(new Date(visita.data_hora_fim), fuso)}`,
     nomeLead,
-    visita.codigo_imovel ? `${visita.codigo_imovel} — ${visita.imoveis?.titulo ?? 'imóvel excluído'}` : 'Sem imóvel definido',
+    visita.codigo_imovel ? `${visita.codigo_imovel} · ${visita.imoveis?.titulo ?? 'imóvel excluído'}` : 'Sem imóvel definido',
     corretor,
     visita.status !== 'agendada' ? `Status: ${visita.status}` : null,
   ]
